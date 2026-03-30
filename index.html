@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentina Murillo Martínez — Growth Marketing & Paid Media</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Fraunces:ital,opsz,wght@0,9..144,100;0,9..144,400;0,9..144,700;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rose:    #E8A49C;
+      --rose-dk: #C97F76;
+      --cream:   #FAF6F0;
+      --cream2:  #F0E9DF;
+      --red:     #D4291F;
+      --dark:    #222018;
+      --mid:     #5A5449;
+      --light:   #A09890;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--dark);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 3rem;
+      backdrop-filter: blur(12px);
+      background: rgba(250,246,240,0.85);
+      border-bottom: 1px solid rgba(200,180,170,0.2);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--red); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      background: var(--rose);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 5rem;
+    }
+    .hero-bg-word {
+      position: absolute;
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: clamp(8rem, 16vw, 18rem);
+      color: rgba(255,255,255,0.18);
+      letter-spacing: -0.04em;
+      pointer-events: none;
+      user-select: none;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+    }
+    .hero-left {
+      padding: 4rem 3rem 4rem 5rem;
+      position: relative; z-index: 2;
+    }
+    .hero-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 1.5rem;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 1.2rem;
+    }
+    .hero-sub {
+      font-size: 1rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.85);
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-pills {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 3rem;
+    }
+    .pill {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #fff;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.45rem 1rem;
+      border-radius: 100px;
+    }
+    .hero-contacts {
+      display: flex; flex-wrap: wrap; gap: 1.5rem;
+    }
+    .hero-contacts a {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.82rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .hero-contacts a:hover { color: #fff; }
+    .hero-right {
+      position: relative; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+      padding: 4rem 4rem 4rem 0;
+    }
+    .hero-photo-wrap {
+      width: clamp(260px, 28vw, 420px);
+      aspect-ratio: 3/4;
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 30px 80px rgba(50,20,15,0.25);
+    }
+    .hero-photo-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+    }
+    .hero-photo-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(160deg, #c97f76 0%, #e8a49c 60%, #f0b8b0 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-photo-placeholder span {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 6rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ─── ABOUT ─── */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: var(--cream);
+    }
+    .about-left {
+      background: var(--dark);
+      padding: 6rem 5rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .about-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 1.5rem;
+    }
+    .about-heading {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 4vw, 4.5rem);
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 2rem;
+    }
+    .about-heading em {
+      font-style: italic;
+      color: var(--rose);
+    }
+    .about-right {
+      padding: 6rem 5rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .about-text {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--mid);
+      margin-bottom: 2rem;
+    }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+      margin-top: 2rem;
+    }
+    .stat-num {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 3rem;
+      color: var(--rose-dk);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 0.3rem;
+    }
+
+    /* ─── SERVICES ─── */
+    .services {
+      background: var(--cream2);
+      padding: 7rem 5rem;
+    }
+    .section-header {
+      display: flex; align-items: baseline; gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--light);
+    }
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: var(--dark);
+      line-height: 1.1;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: rgba(160,140,130,0.2);
+    }
+    .service-card {
+      background: var(--cream);
+      padding: 2.5rem;
+      transition: background 0.3s;
+    }
+    .service-card:hover { background: var(--rose); }
+    .service-card:hover .service-title,
+    .service-card:hover .service-desc { color: #fff; }
+    .service-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 3.5rem;
+      color: var(--cream2);
+      line-height: 1;
+      margin-bottom: 1rem;
+      transition: color 0.3s;
+    }
+    .service-card:hover .service-num { color: rgba(255,255,255,0.2); }
+    .service-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.8rem;
+      transition: color 0.3s;
+    }
+    .service-desc {
+      font-size: 0.87rem;
+      line-height: 1.65;
+      color: var(--mid);
+      transition: color 0.3s;
+    }
+
+    /* ─── PROJECTS ─── */
+    .projects { padding: 7rem 5rem; background: var(--cream); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: rgba(160,140,130,0.15);
+      margin-top: 4rem;
+    }
+    .project-card {
+      background: var(--cream);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.35s;
+      cursor: default;
+    }
+    .project-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--rose);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .project-card:hover::after { transform: scaleX(1); }
+    .project-tag {
+      display: inline-block;
+      font-size: 0.67rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rose-dk);
+      background: rgba(232,164,156,0.15);
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      margin-bottom: 1.2rem;
+    }
+    .project-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .project-client {
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 1.2rem;
+    }
+    .project-desc {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--mid);
+      margin-bottom: 1.5rem;
+    }
+    .project-results {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+    }
+    .result-chip {
+      font-size: 0.75rem;
+      color: var(--dark);
+      background: var(--cream2);
+      border-left: 2px solid var(--rose);
+      padding: 0.3rem 0.7rem;
+    }
+
+    /* ─── TOOLS ─── */
+    .tools {
+      background: var(--dark);
+      padding: 7rem 5rem;
+    }
+    .tools .section-title { color: #fff; }
+    .tools .section-label { color: var(--rose); }
+    .tools-marquee-wrap {
+      overflow: hidden;
+      margin-top: 4rem;
+      display: flex; flex-direction: column; gap: 1.5rem;
+    }
+    .tools-track {
+      display: flex; gap: 1.5rem;
+      animation: marquee 25s linear infinite;
+      width: max-content;
+    }
+    .tools-track.reverse { animation-direction: reverse; animation-duration: 20s; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .tool-badge {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      padding: 0.6rem 1.4rem;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ─── LANGUAGES ─── */
+    .languages {
+      background: var(--rose);
+      padding: 5rem;
+      display: flex; gap: 4rem; flex-wrap: wrap; align-items: center;
+    }
+    .lang-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 2.5rem;
+      color: #fff;
+      flex: 1; min-width: 200px;
+    }
+    .lang-list { display: flex; gap: 3rem; flex-wrap: wrap; }
+    .lang-item { text-align: center; }
+    .lang-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-style: italic;
+      color: #fff;
+    }
+    .lang-level {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-top: 0.3rem;
+    }
+
+    /* ─── CONTACT ─── */
+    .contact {
+      background: var(--cream2);
+      padding: 7rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .contact-left {}
+    .contact-heading {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 4vw, 4.5rem);
+      color: var(--dark);
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+    .contact-heading em {
+      font-style: italic;
+      color: var(--rose-dk);
+    }
+    .contact-sub {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--mid);
+      margin-bottom: 2.5rem;
+    }
+    .contact-details { display: flex; flex-direction: column; gap: 1.2rem; }
+    .contact-row {
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .contact-icon {
+      width: 36px; height: 36px;
+      background: var(--rose);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon svg { width: 16px; height: 16px; fill: #fff; }
+    .contact-text {
+      font-size: 0.95rem;
+      color: var(--dark);
+    }
+    .contact-text a {
+      color: var(--dark);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-text a:hover { color: var(--rose-dk); }
+    .contact-right {
+      background: var(--dark);
+      padding: 3rem;
+      border-radius: 3px;
+    }
+    .contact-form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.8rem;
+      color: #fff;
+      margin-bottom: 2rem;
+    }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.9rem 1rem;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.35); }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--rose); }
+    .form-group textarea { height: 120px; resize: vertical; }
+    .btn-send {
+      width: 100%;
+      background: var(--rose);
+      color: #fff;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 1rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .btn-send:hover { background: var(--rose-dk); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      padding: 2.5rem 5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.95rem;
+    }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero, .about, .contact {
+        grid-template-columns: 1fr;
+      }
+      .hero-left { padding: 6rem 2rem 2rem; }
+      .hero-right { padding: 2rem; justify-content: flex-start; }
+      .about-left, .about-right { padding: 4rem 2rem; }
+      .services, .projects, .tools, .contact { padding: 5rem 2rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .contact { grid-template-columns: 1fr; gap: 3rem; }
+      .languages { padding: 3rem 2rem; flex-direction: column; gap: 2rem; }
+      footer { padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Valentina Murillo</a>
+  <ul class="nav-links">
+    <li><a href="#about">Sobre mí</a></li>
+    <li><a href="#services">Servicios</a></li>
+    <li><a href="#projects">Proyectos</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-word">PORTFOLIO</div>
+  <div class="hero-left">
+    <p class="hero-tag">Growth Marketing · Paid Media · Bogotá, Colombia</p>
+    <h1 class="hero-name">Valentina<br/>Murillo<br/>Martínez</h1>
+    <p class="hero-sub">Driving revenue growth through full-funnel paid media and data-driven strategies across LATAM.</p>
+    <div class="hero-pills">
+      <span class="pill">Growth Marketing</span>
+      <span class="pill">Paid Media</span>
+      <span class="pill">Social Media</span>
+      <span class="pill">Brand Strategy</span>
+      <span class="pill">eCommerce</span>
+    </div>
+    <div class="hero-contacts">
+      <a href="mailto:valentina.murilocg@gmail.com">✉ valentina.murilocg@gmail.com</a>
+      <a href="tel:+573167727580">📞 +57 316 772 7580</a>
+      <a href="https://www.linkedin.com/in/valentina-murillo-martinez/" target="_blank">in LinkedIn</a>
+      <a href="https://instagram.com/vale_murillom" target="_blank">ig @vale_murillom</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo-wrap">
+      <!-- Reemplaza esta línea con tu foto: <img src="foto.jpg" alt="Valentina Murillo" /> -->
+      <img src="3.jpg" alt="Valentina Murillo Martínez" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <div class="hero-photo-placeholder" style="display:none;"><span>VM</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-left">
+    <p class="about-label">Sobre mí</p>
+    <h2 class="about-heading">+10 años<br/>impulsando<br/><em>resultados</em></h2>
+  </div>
+  <div class="about-right">
+    <p class="about-text">
+      Profesional en Publicidad, Mercadeo, Comunicación Social y Diseño Gráfico con más de 10 años de experiencia en el ámbito digital. He desempeñado roles clave como Community Manager, Social Media Manager, Coordinadora de eCommerce, Media Planner Digital, Account Manager y Sales Manager, liderando proyectos en toda la región LATAM.
+    </p>
+    <p class="about-text">
+      Especialista en estrategias de full-funnel, con experiencia en sectores altamente regulados como Healthcare y Pharma. Enfoque metodológico basado en Scrum para alcanzar consistentemente los KPI establecidos y maximizar el rendimiento de cada iniciativa.
+    </p>
+    <div class="about-stats fade-in">
+      <div>
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Años de experiencia</div>
+      </div>
+      <div>
+        <div class="stat-num">$600K</div>
+        <div class="stat-label">USD en budgets gestionados</div>
+      </div>
+      <div>
+        <div class="stat-num">100K+</div>
+        <div class="stat-label">Seguidores orgánicos generados</div>
+      </div>
+      <div>
+        <div class="stat-num">LATAM</div>
+        <div class="stat-label">Alcance geográfico</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header fade-in">
+    <span class="section-label">¿Cómo puedo ayudarte?</span>
+    <h2 class="section-title">Mis servicios</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-in">
+      <div class="service-num">01</div>
+      <h3 class="service-title">Planeación Estratégica de Redes Sociales</h3>
+      <p class="service-desc">Diseño de estrategias integrales para redes sociales alineadas con los objetivos de negocio, audiencias y ciclo de compra del cliente.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">02</div>
+      <h3 class="service-title">Estrategias de Marketing Digital</h3>
+      <p class="service-desc">Full-funnel digital marketing con foco en adquisición, conversión y retención. Planes de medios multi-plataforma: Meta, Google, TikTok, LinkedIn.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">03</div>
+      <h3 class="service-title">Creación & Programación de Contenido</h3>
+      <p class="service-desc">Desarrollo de contenido estratégico: parrillas editoriales, piezas visuales, copywriting orientado a conversión y calendarios de publicación.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">04</div>
+      <h3 class="service-title">Benchmarking & Análisis de Competencia</h3>
+      <p class="service-desc">Investigación profunda del entorno competitivo para identificar oportunidades de posicionamiento y diferenciación de marca.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">05</div>
+      <h3 class="service-title">Análisis, Reporting & KPIs</h3>
+      <p class="service-desc">Configuración de dashboards en Looker Studio / GA4, seguimiento de métricas clave y reportes ejecutivos que traducen datos en decisiones.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">06</div>
+      <h3 class="service-title">Optimización de Campañas Paid</h3>
+      <p class="service-desc">Gestión y optimización de campañas de pauta en Meta Ads, Google Ads, TikTok Ads y DV360, enfocadas en ROAS, CPA y eficiencia de inversión.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="section-header fade-in">
+    <span class="section-label">Experiencia comprobada</span>
+    <h2 class="section-title">Proyectos destacados</h2>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card fade-in">
+      <span class="project-tag">Growth · Sales · eCommerce</span>
+      <h3 class="project-title">Abbott Tienda</h3>
+      <p class="project-client">Abbott Nutrition — LATAM (Perú, Colombia, México)</p>
+      <p class="project-desc">Soporte a la transformación digital del negocio B2B y B2C de Abbott en LATAM, construyendo y escalando ecosistemas de venta online en un entorno de salud altamente regulado.</p>
+      <div class="project-results">
+        <span class="result-chip">Múltiples tiendas eCommerce lanzadas</span>
+        <span class="result-chip">UX & Funnel Optimization</span>
+        <span class="result-chip">Project & eCommerce Lead</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <span class="project-tag">Social Media · Performance · CRO</span>
+      <h3 class="project-title">Diabetes en Control</h3>
+      <p class="project-client">Abbott Diabetes — LATAM</p>
+      <p class="project-desc">Campaña digital para posicionar producto healthcare en redes sociales, con journeys educativos orientados a conversión. La comunidad más grande de Diabetes en Latinoamérica.</p>
+      <div class="project-results">
+        <span class="result-chip">100K+ seguidores orgánicos</span>
+        <span class="result-chip">10K+ visitas calificadas en 2 meses</span>
+        <span class="result-chip">Canal de adquisición sostenible</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <span class="project-tag">Growth · Brand · Sales</span>
+      <h3 class="project-title">Bebé Confía en Mamá</h3>
+      <p class="project-client">Procaps Labs — Colombia</p>
+      <p class="project-desc">Plataforma digital de maternidad y lactancia con estrategia SEO-driven e inbound marketing aplicando principios StoryBrand, preparando demanda previa al lanzamiento de producto.</p>
+      <div class="project-results">
+        <span class="result-chip">Estrategia SEO & Content</span>
+        <span class="result-chip">Inbound Marketing</span>
+        <span class="result-chip">Ecosistema digital completo</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <span class="project-tag">Paid Media · Performance</span>
+      <h3 class="project-title">Seguros Falabella</h3>
+      <p class="project-client">Falabella — Chile, Perú, Colombia</p>
+      <p class="project-desc">Generación de cotizaciones y ventas de seguros en divisiones de Viajes, Vida, Auto y Hogar, con pauta multi-plataforma en META, Google Ads, YouTube, DV360 y TikTok.</p>
+      <div class="project-results">
+        <span class="result-chip">Gestión de Pauta Multi-canal</span>
+        <span class="result-chip">Optimización CPA</span>
+        <span class="result-chip">KPI Achievement</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <span class="project-tag">Community · eCommerce · Social</span>
+      <h3 class="project-title">Raíces del Alma Colombia</h3>
+      <p class="project-client">Emprendimiento Local — Bogotá</p>
+      <p class="project-desc">Posicionamiento orgánico y pago para emprendimiento en época navideña. Estrategia de contenido y pauta paga enfocada en conversión a WhatsApp.</p>
+      <div class="project-results">
+        <span class="result-chip">+6M COP en ventas (dic 2025)</span>
+        <span class="result-chip">Comunidad META</span>
+        <span class="result-chip">Conversión a WhatsApp</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <span class="project-tag">Performance · Growth · Social</span>
+      <h3 class="project-title">SubastArte Colombia</h3>
+      <p class="project-client">Fundación Prohijar — Bogotá</p>
+      <p class="project-desc">Creación de presencia digital para fundación sin ánimo de lucro y gestión de subasta de arte benéfica. Full-funnel de awareness a captación de donaciones.</p>
+      <div class="project-results">
+        <span class="result-chip">400+ leads de calidad</span>
+        <span class="result-chip">+200M COP en inversión artística</span>
+        <span class="result-chip">Presencia digital desde cero</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="tools">
+  <div class="section-header fade-in">
+    <span class="section-label">Stack tecnológico</span>
+    <h2 class="section-title" style="color:#fff">Herramientas</h2>
+  </div>
+  <div class="tools-marquee-wrap">
+    <div class="tools-track">
+      <span class="tool-badge">Meta Ads</span>
+      <span class="tool-badge">Google Ads</span>
+      <span class="tool-badge">TikTok Ads</span>
+      <span class="tool-badge">LinkedIn Ads</span>
+      <span class="tool-badge">DV360</span>
+      <span class="tool-badge">Google Analytics 4</span>
+      <span class="tool-badge">Looker Studio</span>
+      <span class="tool-badge">Google Tag Manager</span>
+      <span class="tool-badge">HubSpot</span>
+      <span class="tool-badge">Salesforce</span>
+      <span class="tool-badge">Meta Ads</span>
+      <span class="tool-badge">Google Ads</span>
+      <span class="tool-badge">TikTok Ads</span>
+      <span class="tool-badge">LinkedIn Ads</span>
+      <span class="tool-badge">DV360</span>
+      <span class="tool-badge">Google Analytics 4</span>
+      <span class="tool-badge">Looker Studio</span>
+      <span class="tool-badge">Google Tag Manager</span>
+      <span class="tool-badge">HubSpot</span>
+      <span class="tool-badge">Salesforce</span>
+    </div>
+    <div class="tools-track reverse">
+      <span class="tool-badge">Shopify</span>
+      <span class="tool-badge">Vtex</span>
+      <span class="tool-badge">WooCommerce</span>
+      <span class="tool-badge">WordPress</span>
+      <span class="tool-badge">Canva</span>
+      <span class="tool-badge">Adobe Creative Suite</span>
+      <span class="tool-badge">Asana</span>
+      <span class="tool-badge">ClickUp</span>
+      <span class="tool-badge">Trello</span>
+      <span class="tool-badge">Scrum / Agile</span>
+      <span class="tool-badge">CapCut</span>
+      <span class="tool-badge">Shopify</span>
+      <span class="tool-badge">Vtex</span>
+      <span class="tool-badge">WooCommerce</span>
+      <span class="tool-badge">WordPress</span>
+      <span class="tool-badge">Canva</span>
+      <span class="tool-badge">Adobe Creative Suite</span>
+      <span class="tool-badge">Asana</span>
+      <span class="tool-badge">ClickUp</span>
+      <span class="tool-badge">Trello</span>
+      <span class="tool-badge">Scrum / Agile</span>
+      <span class="tool-badge">CapCut</span>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section class="languages">
+  <h2 class="lang-title">Hablo<br/>el idioma<br/>de tu mercado</h2>
+  <div class="lang-list">
+    <div class="lang-item">
+      <div class="lang-name">🇪🇸 Español</div>
+      <div class="lang-level">Nativo</div>
+    </div>
+    <div class="lang-item">
+      <div class="lang-name">🇺🇸 English</div>
+      <div class="lang-level">Profesional (B2)</div>
+    </div>
+    <div class="lang-item">
+      <div class="lang-name">🇧🇷 Português</div>
+      <div class="lang-level">Conversacional</div>
+    </div>
+    <div class="lang-item">
+      <div class="lang-name">🇫🇷 Français</div>
+      <div class="lang-level">Básico</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-left fade-in">
+    <h2 class="contact-heading">¿Hablamos<br/>de tu <em>próximo</em><br/>proyecto?</h2>
+    <p class="contact-sub">Estoy disponible para proyectos freelance, consultorías y colaboraciones. Escríbeme y conversemos.</p>
+    <div class="contact-details">
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <div class="contact-text"><a href="mailto:valentina.murilocg@gmail.com">valentina.murilocg@gmail.com</a></div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        </div>
+        <div class="contact-text"><a href="tel:+573167727580">+57 316 772 7580</a></div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        </div>
+        <div class="contact-text"><a href="https://www.linkedin.com/in/valentina-murillo-martinez/" target="_blank">linkedin.com/in/valentina-murillo-martinez</a></div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </div>
+        <div class="contact-text"><a href="https://instagram.com/vale_murillom" target="_blank">@vale_murillom</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="contact-right fade-in">
+    <h3 class="contact-form-title">Envíame un mensaje</h3>
+    <form onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <input type="text" placeholder="Tu nombre" required />
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Tu correo" required />
+      </div>
+      <div class="form-group">
+        <input type="text" placeholder="Asunto" />
+      </div>
+      <div class="form-group">
+        <textarea placeholder="Cuéntame sobre tu proyecto..."></textarea>
+      </div>
+      <button type="submit" class="btn-send">Enviar mensaje →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Valentina Murillo Martínez</span>
+  <span class="footer-copy">© 2026 · Growth Marketing & Paid Media · Bogotá, Colombia</span>
+</footer>
+
+<script>
+  // Intersection Observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-send');
+    btn.textContent = '✓ Mensaje enviado';
+    btn.style.background = '#4a9068';
+    setTimeout(() => {
+      btn.textContent = 'Enviar mensaje →';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }
+</script>
+
+</body>
+</html>
