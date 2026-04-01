@@ -457,13 +457,13 @@
   </div>
   <div class="contact-right fade-in">
     <h3 class="contact-form-title" data-es="Envíame un mensaje" data-en="Send me a message">Envíame un mensaje</h3>
-    <div>
+    <form action="https://formspree.io/f/xaqlbzej" method="POST">
       <div class="form-group"><input type="text" id="f-name" data-placeholder-es="Tu nombre" data-placeholder-en="Your name" placeholder="Tu nombre" /></div>
       <div class="form-group"><input type="email" id="f-email" data-placeholder-es="Tu correo" data-placeholder-en="Your email" placeholder="Tu correo" /></div>
       <div class="form-group"><input type="text" id="f-subject" data-placeholder-es="Asunto" data-placeholder-en="Subject" placeholder="Asunto" /></div>
       <div class="form-group"><textarea id="f-msg" data-placeholder-es="Cuéntame sobre tu proyecto..." data-placeholder-en="Tell me about your project..." placeholder="Cuéntame sobre tu proyecto..."></textarea></div>
-      <button type="button" class="btn-send" data-es="Enviar mensaje →" data-en="Send message →" onclick="handleSubmit()">Enviar mensaje →</button>
-    </div>
+    <button type="submit" class="btn-send" data-es="Enviar mensaje →" data-en="Send message →">Enviar mensaje →</button>  
+    </form>
   </div>
 </section>
 
