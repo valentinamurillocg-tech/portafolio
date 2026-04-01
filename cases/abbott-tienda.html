@@ -479,6 +479,25 @@
   /* language switch fade */
   [data-es], [data-en] { transition: opacity 0.25s ease; }
 
+  /* ─── EVIDENCE ─── */
+  .evidence-section {
+    background: var(--warm-white);
+    padding: 6rem 8vw;
+  }
+
+  .evidence-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .evidence-img {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 24px 64px rgba(44,36,32,0.13);
+    margin-top: 2rem;
+    display: block;
+  }
+
   /* ─── RESPONSIVE ─── */
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; }
@@ -545,6 +564,21 @@
       <span data-es>Desarrollar y optimizar canales de <em>eCommerce</em> para aumentar ventas digitales, mejorar la experiencia del cliente y apoyar la <em>transformación digital</em> de las marcas farmacéuticas de Abbott en LATAM.</span>
       <span data-en style="display:none">Develop and optimize <em>eCommerce</em> channels to increase digital sales, improve customer experience, and support the <em>digital transformation</em> of Abbott's pharmaceutical brands across LATAM.</span>
     </p>
+  </div>
+</section>
+
+<!-- ═══ EVIDENCIA ═══ -->
+<section class="evidence-section">
+  <div class="evidence-inner reveal">
+    <div class="section-label">
+      <span data-es>Evidencia</span>
+      <span data-en style="display:none">Evidence</span>
+    </div>
+    <img
+      src="img/abbott-evidencia.png"
+      alt="Abbott Tienda — Evidencia del proyecto"
+      class="evidence-img"
+    />
   </div>
 </section>
 
