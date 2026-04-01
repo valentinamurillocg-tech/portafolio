@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bebé Confía en Mamá — Case Study</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css"/>
+<style>
+  :root {
+    --blush: #F5EAF0;
+    --blush-deep: #E8D0DC;
+    --rose: #C4728A;
+    --rose-light: #D99AAD;
+    --rose-pale: #F0D8E2;
+    --lavender: #EAE4F2;
+    --plum: #3D2440;
+    --mid-plum: #7A4E6E;
+    --light-plum: #B08AA0;
+    --teal: #5AACB0;
+    --warm-white: #FDFAF8;
+    --cream: #F8F3EF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--plum);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── LANG TOGGLE ─── */
+  .lang-bar {
+    position: fixed;
+    top: 1.2rem; right: 1.5rem;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    background: var(--plum);
+    border-radius: 50px;
+    padding: 4px;
+    box-shadow: 0 4px 24px rgba(61,36,64,0.25);
+  }
+
+  .lang-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.45rem 1.1rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    background: transparent;
+    color: var(--light-plum);
+    transition: all 0.3s ease;
+  }
+
+  .lang-btn.active {
+    background: var(--rose);
+    color: var(--warm-white);
+  }
+
+  /* ─── BACK BUTTON ─── */
+  .back-btn {
+    position: fixed;
+    top: 1.2rem; left: 1.5rem;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--plum);
+    color: var(--rose-light);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.1rem;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 24px rgba(61,36,64,0.25);
+    transition: background 0.3s ease;
+  }
+
+  .back-btn:hover { background: var(--rose); color: var(--warm-white); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    background: var(--plum);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(196,114,138,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--rose), var(--teal), transparent);
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(196,114,138,0.15);
+    border: 1px solid rgba(196,114,138,0.3);
+    color: var(--rose-light);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 2px;
+    width: fit-content;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 4.8rem);
+    font-weight: 700;
+    color: var(--warm-white);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+
+  .hero-title span {
+    color: var(--rose);
+    display: block;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.65em;
+    margin-bottom: 0.3rem;
+  }
+
+  .hero-subtitle {
+    margin-top: 1.5rem;
+    color: var(--light-plum);
+    font-size: 0.95rem;
+    font-weight: 300;
+    max-width: 360px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-meta {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+
+  .meta-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .meta-divider { width: 40px; height: 1px; background: rgba(90,172,176,0.4); }
+  .flags { font-size: 1.4rem; }
+
+  .hero-right {
+    background: var(--warm-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 4rem;
+    position: relative;
+  }
+
+  .hero-right::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(196,114,138,0.07) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(90,172,176,0.06) 0%, transparent 50%);
+  }
+
+  .context-card {
+    position: relative;
+    z-index: 1;
+    max-width: 440px;
+    animation: fadeUp 0.9s 0.5s ease both;
+  }
+
+  .section-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 28px; height: 2px;
+    background: var(--rose);
+  }
+
+  .context-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--plum);
+    font-style: italic;
+  }
+
+  .context-text strong {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--mid-plum);
+  }
+
+  /* ─── NEEDS ─── */
+  .needs-section {
+    background: var(--rose-pale);
+    padding: 6rem 8vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .needs-section::before {
+    content: 'NEEDS';
+    position: absolute;
+    right: 4vw; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 12vw, 12rem);
+    font-weight: 700;
+    color: rgba(196,114,138,0.1);
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .needs-inner {
+    max-width: 900px;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .needs-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700;
+    color: var(--plum);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .needs-title em {
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  .needs-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .needs-list li {
+    font-size: 0.92rem;
+    color: var(--mid-plum);
+    line-height: 1.55;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .needs-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.55em;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--rose);
+  }
+
+  /* ─── EVIDENCE CAROUSEL ─── */
+  .evidence-section {
+    background: var(--plum);
+    padding: 6rem 8vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .evidence-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rose) 30%, var(--teal) 70%, transparent);
+  }
+
+  .evidence-header {
+    margin-bottom: 3rem;
+  }
+
+  .evidence-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .evidence-label::before {
+    content: '';
+    display: block;
+    width: 28px; height: 2px;
+    background: var(--rose);
+  }
+
+  .evidence-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--warm-white);
+    font-style: italic;
+  }
+
+  .swiper {
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .swiper-slide img {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    border-radius: 16px;
+  }
+
+  .swiper-pagination-bullet {
+    background: var(--rose-light);
+    opacity: 0.5;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: var(--rose);
+    opacity: 1;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: var(--warm-white);
+    background: rgba(61,36,64,0.6);
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    backdrop-filter: blur(4px);
+  }
+
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  /* ─── ACTIONS ─── */
+  .actions-section {
+    background: var(--warm-white);
+    padding: 7rem 8vw;
+    position: relative;
+  }
+
+  .actions-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 8vw;
+    width: calc(100% - 16vw); height: 1px;
+    background: linear-gradient(90deg, var(--rose-pale), transparent);
+  }
+
+  .actions-inner {
+    max-width: 960px;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .actions-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    color: var(--plum);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    position: sticky;
+    top: 2rem;
+  }
+
+  .actions-title em {
+    font-style: italic;
+    color: var(--rose);
+    display: block;
+  }
+
+  .actions-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .action-item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    padding: 1.8rem 0;
+    border-bottom: 1px solid var(--blush-deep);
+    transition: transform 0.3s ease;
+  }
+
+  .action-item:first-child { border-top: 1px solid var(--blush-deep); }
+  .action-item:hover { transform: translateX(8px); }
+
+  .action-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--rose-pale);
+    line-height: 1;
+    padding-top: 0.1rem;
+  }
+
+  .action-text {
+    font-size: 0.92rem;
+    color: var(--mid-plum);
+    line-height: 1.6;
+  }
+
+  .action-text strong {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--plum);
+    margin-bottom: 0.3rem;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--plum);
+    padding: 3rem 8vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--warm-white);
+    font-weight: 700;
+  }
+
+  .footer-brand span { color: var(--rose); }
+
+  .footer-meta {
+    font-size: 0.78rem;
+    color: var(--light-plum);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 5rem 2rem 2.5rem; min-height: 55vh; justify-content: flex-end; }
+    .hero-right { padding: 3rem 2rem; }
+    .needs-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .actions-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .actions-title { position: static; }
+    .evidence-section, .needs-section, .actions-section { padding: 5rem 6vw; }
+    .swiper-slide img { height: 280px; }
+    .footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── BACK ─── -->
+<a href="https://valentinamurillo.vercel.app/#projects" class="back-btn">← Portfolio</a>
+
+<!-- ─── LANG TOGGLE ─── -->
+<div class="lang-bar">
+  <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="tag">
+      <span data-es>Crecimiento · Marca · Ventas &nbsp;·&nbsp; Julio 2016</span>
+      <span data-en style="display:none">Growth · Brand · Sales &nbsp;·&nbsp; July 2016</span>
+    </div>
+    <h1 class="hero-title">
+      <span>Bebé Confía en Mamá</span>
+      Procaps<br>Labs
+    </h1>
+    <p class="hero-subtitle">
+      <span data-es>Plataforma digital de maternidad y lactancia con estrategia SEO-driven e inbound marketing para Colombia.</span>
+      <span data-en style="display:none">A motherhood and breastfeeding digital platform with SEO-driven and inbound marketing strategy for Colombia.</span>
+    </p>
+    <div class="hero-meta">
+      <div class="meta-date">Colombia · 2016</div>
+      <div class="meta-divider"></div>
+      <div class="flags">🇨🇴</div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="context-card">
+      <div class="section-label">
+        <span data-es>Contexto</span>
+        <span data-en style="display:none">Context</span>
+      </div>
+      <p class="context-text">
+        <span data-es>Desarrollo de una <strong>plataforma digital</strong> enfocada en maternidad, embarazo y lactancia, diseñada para acompañar a las mujeres en las primeras etapas de la maternidad a través de contenido educativo.</span>
+        <span data-en style="display:none">Development of a <strong>digital platform</strong> focused on motherhood, pregnancy, and breastfeeding, designed to support women in the early stages of motherhood through educational content.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NEEDS ═══ -->
+<section class="needs-section">
+  <div class="needs-inner reveal">
+    <div>
+      <div class="section-label">
+        <span data-es>Necesidades</span>
+        <span data-en style="display:none">Needs</span>
+      </div>
+      <h2 class="needs-title">
+        <span data-es>Construir confianza<br>antes del <em>lanzamiento.</em></span>
+        <span data-en style="display:none">Building trust<br>before the <em>launch.</em></span>
+      </h2>
+    </div>
+    <ul class="needs-list">
+      <li>
+        <span data-es>Construir una fuerte presencia digital en el espacio de nutrición materna e infantil.</span>
+        <span data-en style="display:none">Build a strong digital presence in the maternal and infant nutrition space.</span>
+      </li>
+      <li>
+        <span data-es>Educar a la audiencia en temas clave: lactancia, desarrollo infantil y nutrición.</span>
+        <span data-en style="display:none">Educate the target audience on key topics: breastfeeding, infant development, and nutrition.</span>
+      </li>
+      <li>
+        <span data-es>Establecer confianza y credibilidad antes del lanzamiento de un producto nutricional.</span>
+        <span data-en style="display:none">Establish trust and credibility ahead of a future nutritional product launch.</span>
+      </li>
+      <li>
+        <span data-es>Generar tráfico calificado a través de contenido relevante y de alta intención.</span>
+        <span data-en style="display:none">Drive qualified traffic through relevant, high-intent content.</span>
+      </li>
+      <li>
+        <span data-es>Crear una base de usuarios potenciales para conversión futura y lifecycle marketing.</span>
+        <span data-en style="display:none">Create a base of potential users for future conversion and lifecycle marketing strategies.</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══ EVIDENCE CAROUSEL ═══ -->
+<section class="evidence-section">
+  <div class="evidence-header reveal">
+    <div class="evidence-label">
+      <span data-es>Evidencia</span>
+      <span data-en style="display:none">Evidence</span>
+    </div>
+    <p class="evidence-subtitle">
+      <span data-es>La plataforma en acción.</span>
+      <span data-en style="display:none">The platform in action.</span>
+    </p>
+  </div>
+
+  <div class="swiper reveal">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img src="img/bebe-evidencia-1.png" alt="Bebé Confía en Mamá — Desktop view" />
+      </div>
+      <div class="swiper-slide">
+        <img src="img/bebe-evidencia-2.png" alt="Bebé Confía en Mamá — Content view" />
+      </div>
+      <div class="swiper-slide">
+        <img src="img/bebe-evidencia-3.png" alt="Bebé Confía en Mamá — Mobile view" />
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</section>
+
+<!-- ═══ ACTIONS ═══ -->
+<section class="actions-section">
+  <div class="actions-inner reveal">
+    <div>
+      <div class="section-label">
+        <span data-es>Acciones</span>
+        <span data-en style="display:none">Actions</span>
+      </div>
+      <h2 class="actions-title">
+        <span data-es>Estrategia con <em>propósito.</em></span>
+        <span data-en style="display:none">Strategy with <em>purpose.</em></span>
+      </h2>
+    </div>
+
+    <div class="actions-grid">
+
+      <div class="action-item">
+        <div class="action-number">01</div>
+        <div class="action-text">
+          <strong>
+            <span data-es>Ecosistema Digital Estructurado</span>
+            <span data-en style="display:none">Structured Digital Ecosystem</span>
+          </strong>
+          <span data-es>Organización del contenido por etapas clave de la maternidad: embarazo, lactancia, nutrición infantil y desarrollo.</span>
+          <span data-en style="display:none">Content organized by key motherhood stages: pregnancy, breastfeeding, infant nutrition, and development.</span>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-number">02</div>
+        <div class="action-text">
+          <strong>
+            <span data-es>Estrategia de Contenido SEO</span>
+            <span data-en style="display:none">SEO-Driven Content Strategy</span>
+          </strong>
+          <span data-es>Desarrollo de contenido alineado con búsquedas de alta intención relacionadas con salud materna e infantil.</span>
+          <span data-en style="display:none">Content strategy aligned with high-intent search queries related to maternal and infant health.</span>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-number">03</div>
+        <div class="action-text">
+          <strong>
+            <span data-es>Inbound Marketing</span>
+            <span data-en style="display:none">Inbound Marketing</span>
+          </strong>
+          <span data-es>Enfoque inbound para atraer, educar y guiar a las usuarias a lo largo de su journey de toma de decisiones.</span>
+          <span data-en style="display:none">Inbound approach to attract, educate, and guide users throughout their decision-making journey.</span>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-number">04</div>
+        <div class="action-text">
+          <strong>
+            <span data-es>Principios StoryBrand</span>
+            <span data-en style="display:none">StoryBrand Principles</span>
+          </strong>
+          <span data-es>La madre como protagonista, la marca como guía confiable. Contenido empático y educativo en toda la plataforma.</span>
+          <span data-en style="display:none">The mother as the hero, the brand as a trusted guide. Empathetic, educational content throughout the platform.</span>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-number">05</div>
+        <div class="action-text">
+          <strong>
+            <span data-es>Estrategia Social Media</span>
+            <span data-en style="display:none">Social Media Strategy</span>
+          </strong>
+          <span data-es>Diseño y ejecución de la estrategia en redes sociales para generar awareness, engagement y tráfico a la plataforma.</span>
+          <span data-en style="display:none">Designed and executed the social media strategy to drive awareness, engagement, and traffic to the platform.</span>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-number">06</div>
+        <div class="action-text">
+          <strong>
+            <span data-es>Preparación de Demanda</span>
+            <span data-en style="display:none">Demand Preparation</span>
+          </strong>
+          <span data-es>Alineación de todos los esfuerzos de contenido con los objetivos de negocio, preparando la demanda antes del lanzamiento del producto.</span>
+          <span data-en style="display:none">All content efforts aligned with business objectives, preparing demand ahead of a product launch in a regulated environment.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-brand">Bebé Confía en<span> Mamá</span> · Case Study</div>
+  <div class="footer-meta">Growth · Brand · Sales · Colombia · 2016</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
+<script>
+  // ─── SWIPER ───
+  new Swiper('.swiper', {
+    loop: true,
+    autoplay: { delay: 3500, disableOnInteraction: false },
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+  });
+
+  // ─── LANG SWITCH ───
+  function setLang(lang) {
+    document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-es]').forEach(el => el.style.display = lang === 'es' ? '' : 'none');
+    document.querySelectorAll('[data-en]').forEach(el => el.style.display = lang === 'en' ? '' : 'none');
+  }
+
+  // ─── SCROLL REVEAL ───
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
