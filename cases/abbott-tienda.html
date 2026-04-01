@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abbott Tienda — Case Study</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F2EC;
+    --warm-white: #FDFAF6;
+    --salmon: #D4826A;
+    --salmon-light: #E8A898;
+    --salmon-pale: #F2D5CC;
+    --charcoal: #2C2420;
+    --mid-brown: #6B4E3D;
+    --light-brown: #A08070;
+    --gold: #C9A96E;
+    --gold-light: #E8D5A8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── LANG TOGGLE ─── */
+  .lang-bar {
+    position: fixed;
+    top: 1.2rem;
+    right: 1.5rem;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    background: var(--charcoal);
+    border-radius: 50px;
+    padding: 4px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+  }
+
+  .lang-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.45rem 1.1rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    background: transparent;
+    color: var(--light-brown);
+    transition: all 0.3s ease;
+  }
+
+  .lang-btn.active {
+    background: var(--salmon);
+    color: var(--warm-white);
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    background: var(--charcoal);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(212,130,106,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--salmon), var(--gold), transparent);
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(212,130,106,0.15);
+    border: 1px solid rgba(212,130,106,0.3);
+    color: var(--salmon-light);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 2px;
+    width: fit-content;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 900;
+    color: var(--warm-white);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+
+  .hero-title span {
+    color: var(--salmon);
+    display: block;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.7em;
+    margin-bottom: 0.3rem;
+  }
+
+  .hero-subtitle {
+    margin-top: 1.5rem;
+    color: var(--light-brown);
+    font-size: 0.95rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    max-width: 360px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-meta {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+
+  .meta-date {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .meta-divider { width: 40px; height: 1px; background: rgba(201,169,110,0.4); }
+  .flags { display: flex; gap: 0.3rem; font-size: 1.4rem; }
+
+  .hero-right {
+    background: var(--warm-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 4rem;
+    position: relative;
+  }
+
+  .hero-right::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(212,130,106,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(201,169,110,0.07) 0%, transparent 50%);
+  }
+
+  .context-card {
+    position: relative;
+    z-index: 1;
+    max-width: 440px;
+    animation: fadeUp 0.9s 0.5s ease both;
+  }
+
+  .section-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--salmon);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 28px; height: 2px;
+    background: var(--salmon);
+  }
+
+  .context-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--charcoal);
+    font-style: italic;
+  }
+
+  .context-text strong {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--mid-brown);
+  }
+
+  /* ─── GOAL ─── */
+  .goal-section {
+    background: var(--salmon-pale);
+    padding: 6rem 8vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .goal-section::before {
+    content: attr(data-label);
+    position: absolute;
+    right: 5vw; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(6rem, 14vw, 14rem);
+    font-weight: 900;
+    color: rgba(212,130,106,0.12);
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .goal-inner { max-width: 820px; position: relative; z-index: 1; }
+
+  .goal-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--charcoal);
+  }
+
+  .goal-text em {
+    font-style: normal;
+    color: var(--salmon);
+    font-weight: 700;
+  }
+
+  /* ─── RESULTS ─── */
+  .results-section {
+    background: var(--charcoal);
+    padding: 7rem 8vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .results-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--salmon) 30%, var(--gold) 70%, transparent);
+  }
+
+  .results-header {
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .results-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--warm-white);
+    letter-spacing: -0.02em;
+  }
+
+  .results-count {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .result-item {
+    background: var(--charcoal);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: background 0.3s ease;
+  }
+
+  .result-item:hover { background: rgba(255,255,255,0.04); }
+
+  .result-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: rgba(212,130,106,0.2);
+    line-height: 1;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+  }
+
+  .result-item:hover .result-number { color: rgba(212,130,106,0.4); }
+
+  .result-text {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: rgba(253,250,246,0.75);
+    line-height: 1.55;
+  }
+
+  .result-text strong {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--warm-white);
+    margin-bottom: 0.4rem;
+  }
+
+  .result-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--salmon), var(--gold));
+    transition: width 0.4s ease;
+  }
+
+  .result-item:hover::after { width: 100%; }
+
+  /* ─── ROLE ─── */
+  .role-section {
+    background: var(--warm-white);
+    padding: 7rem 8vw;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 6rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .role-section::after {
+    content: '';
+    position: absolute;
+    left: 8vw; top: 0;
+    width: calc(100% - 16vw); height: 1px;
+    background: linear-gradient(90deg, var(--salmon-pale), transparent);
+  }
+
+  .role-label-big {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-weight: 900;
+    color: var(--charcoal);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .role-label-big em {
+    font-style: italic;
+    color: var(--salmon);
+  }
+
+  .role-description {
+    font-size: 0.88rem;
+    color: var(--light-brown);
+    margin-top: 1.2rem;
+    max-width: 280px;
+  }
+
+  .roles-list { display: flex; flex-direction: column; }
+
+  .role-item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    align-items: start;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--salmon-pale);
+    transition: transform 0.3s ease;
+  }
+
+  .role-item:first-child { border-top: 1px solid var(--salmon-pale); }
+  .role-item:hover { transform: translateX(8px); }
+
+  .role-icon {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--salmon-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .role-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--charcoal);
+    margin-bottom: 0.3rem;
+  }
+
+  .role-desc {
+    font-size: 0.85rem;
+    color: var(--light-brown);
+    line-height: 1.5;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--charcoal);
+    padding: 3rem 8vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--warm-white);
+    font-weight: 700;
+  }
+
+  .footer-brand span { color: var(--salmon); }
+
+  .footer-meta {
+    font-size: 0.78rem;
+    color: var(--light-brown);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* language switch fade */
+  [data-es], [data-en] { transition: opacity 0.25s ease; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 5rem 2rem 2.5rem; min-height: 55vh; justify-content: flex-end; }
+    .hero-right { padding: 3rem 2rem; }
+    .role-section { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 6vw; }
+    .goal-section, .results-section { padding: 5rem 6vw; }
+    .footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── LANG TOGGLE ─── -->
+<div class="lang-bar">
+  <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="tag">
+      <span data-es>Crecimiento &amp; Ventas &nbsp;·&nbsp; Junio 2018</span>
+      <span data-en style="display:none">Growth &amp; Sales &nbsp;·&nbsp; June 2018</span>
+    </div>
+    <h1 class="hero-title">
+      <span>Abbott Tienda</span>
+      Abbott<br>Nutrition
+    </h1>
+    <p class="hero-subtitle">
+      <span data-es>Transformación digital del ecosistema de ventas de Abbott en América Latina — B2B &amp; B2C.</span>
+      <span data-en style="display:none">Digital transformation of Abbott's sales ecosystem across Latin America — B2B &amp; B2C.</span>
+    </p>
+    <div class="hero-meta">
+      <div class="meta-date">LATAM · 2018</div>
+      <div class="meta-divider"></div>
+      <div class="flags">🇵🇪 🇨🇴 🇲🇽</div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="context-card">
+      <div class="section-label">
+        <span data-es>Contexto</span>
+        <span data-en style="display:none">Context</span>
+      </div>
+      <p class="context-text">
+        <span data-es>Un proyecto enfocado en construir y escalar ecosistemas de ventas online — <strong>B2B y B2C</strong> — en un entorno de salud altamente regulado, garantizando cumplimiento normativo, confianza y accesibilidad para los pacientes.</span>
+        <span data-en style="display:none">A project focused on building and scaling online sales ecosystems — <strong>B2B &amp; B2C</strong> — in a highly regulated healthcare environment, ensuring compliance, trust, and accessibility for patients.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GOAL ═══ -->
+<section class="goal-section" id="goal-section" data-label="GOAL">
+  <div class="goal-inner reveal">
+    <div class="section-label">
+      <span data-es>Objetivo</span>
+      <span data-en style="display:none">Goal</span>
+    </div>
+    <p class="goal-text">
+      <span data-es>Desarrollar y optimizar canales de <em>eCommerce</em> para aumentar ventas digitales, mejorar la experiencia del cliente y apoyar la <em>transformación digital</em> de las marcas farmacéuticas de Abbott en LATAM.</span>
+      <span data-en style="display:none">Develop and optimize <em>eCommerce</em> channels to increase digital sales, improve customer experience, and support the <em>digital transformation</em> of Abbott's pharmaceutical brands across LATAM.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ═══ KEY RESULTS ═══ -->
+<section class="results-section">
+  <div class="results-header reveal">
+    <h2 class="results-title">Key Results</h2>
+    <span class="results-count">
+      <span data-es>05 logros</span>
+      <span data-en style="display:none">05 achievements</span>
+    </span>
+  </div>
+
+  <div class="results-grid">
+
+    <div class="result-item reveal">
+      <div class="result-number">01</div>
+      <div class="result-text">
+        <strong>
+          <span data-es>eCommerce Multi-mercado</span>
+          <span data-en style="display:none">Multi-market eCommerce</span>
+        </strong>
+        <span data-es>Lanzamiento y gestión exitosa de múltiples tiendas online en los principales mercados de LATAM.</span>
+        <span data-en style="display:none">Successfully launched and managed multiple eCommerce stores across key LATAM markets.</span>
+      </div>
+    </div>
+
+    <div class="result-item reveal">
+      <div class="result-number">02</div>
+      <div class="result-text">
+        <strong>
+          <span data-es>UX &amp; Optimización de Funnel</span>
+          <span data-en style="display:none">UX &amp; Funnel Optimization</span>
+        </strong>
+        <span data-es>Mejora de la experiencia del cliente mediante optimización de UX y embudos de conversión.</span>
+        <span data-en style="display:none">Improved customer experience through UX enhancements and conversion funnel optimization.</span>
+      </div>
+    </div>
+
+    <div class="result-item reveal">
+      <div class="result-number">03</div>
+      <div class="result-text">
+        <strong>
+          <span data-es>Capacidades de Venta Digital</span>
+          <span data-en style="display:none">Digital Sales Capabilities</span>
+        </strong>
+        <span data-es>Habilitación de canales de ventas digitales para las principales marcas farmacéuticas del portafolio.</span>
+        <span data-en style="display:none">Enabled digital sales channels for major pharma brands within the Abbott portfolio.</span>
+      </div>
+    </div>
+
+    <div class="result-item reveal">
+      <div class="result-number">04</div>
+      <div class="result-text">
+        <strong>
+          <span data-es>Eficiencia Operacional</span>
+          <span data-en style="display:none">Operational Efficiency</span>
+        </strong>
+        <span data-es>Fortalecimiento de la eficiencia operativa mediante coordinación cross-funcional entre equipos.</span>
+        <span data-en style="display:none">Strengthened operational efficiency through cross-functional team coordination.</span>
+      </div>
+    </div>
+
+    <div class="result-item reveal">
+      <div class="result-number">05</div>
+      <div class="result-text">
+        <strong>
+          <span data-es>Transformación Digital</span>
+          <span data-en style="display:none">Digital Transformation</span>
+        </strong>
+        <span data-es>Contribución clave a la transformación del portafolio de nutrición de Abbott en la región.</span>
+        <span data-en style="display:none">Key contribution to the digital transformation of Abbott's nutrition portfolio across the region.</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ ROLE & OWNERSHIP ═══ -->
+<section class="role-section">
+  <div class="reveal">
+    <div class="section-label">
+      <span data-es>Rol &amp; Ownership</span>
+      <span data-en style="display:none">Role &amp; Ownership</span>
+    </div>
+    <h2 class="role-label-big">
+      <span data-es>Liderar con<br><em>visión</em><br>y ejecución.</span>
+      <span data-en style="display:none">Leading with<br><em>vision</em><br>and execution.</span>
+    </h2>
+    <p class="role-description">
+      <span data-es>Responsabilidad integral sobre estrategia, operaciones y relaciones con stakeholders clave.</span>
+      <span data-en style="display:none">Full ownership of strategy, operations, and key stakeholder relationships.</span>
+    </p>
+  </div>
+
+  <div class="roles-list reveal">
+
+    <div class="role-item">
+      <div class="role-icon">🚀</div>
+      <div>
+        <div class="role-title">Project &amp; eCommerce Lead</div>
+        <div class="role-desc">
+          <span data-es>Dirección del proyecto y liderazgo del canal de comercio electrónico, coordinando todas las iniciativas digitales.</span>
+          <span data-en style="display:none">Project direction and eCommerce channel leadership, coordinating all digital initiatives end-to-end.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-item">
+      <div class="role-icon">🤝</div>
+      <div>
+        <div class="role-title">Account Manager — Abbott B2B</div>
+        <div class="role-desc">
+          <span data-es>Gestión de las operaciones B2B de Abbott, asegurando relaciones estratégicas con socios comerciales clave.</span>
+          <span data-en style="display:none">Management of Abbott's B2B operations, securing strategic relationships with key commercial partners.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-item">
+      <div class="role-icon">⚙️</div>
+      <div>
+        <div class="role-title">
+          <span data-es>Estrategia, Alineación &amp; Entrega</span>
+          <span data-en style="display:none">Strategy, Alignment &amp; Delivery</span>
+        </div>
+        <div class="role-desc">
+          <span data-es>Responsable de la ejecución de la estrategia, alineación con stakeholders y entrega operacional de resultados.</span>
+          <span data-en style="display:none">Responsible for strategy execution, stakeholder alignment, and operational delivery of results.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-brand">Abbott<span> Tienda</span> · Case Study</div>
+  <div class="footer-meta">Growth &amp; Sales · LATAM · 2018</div>
+</footer>
+
+<script>
+  // ─── LANGUAGE SWITCH ───
+  let currentLang = 'es';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-es]').forEach(el => {
+      el.style.display = lang === 'es' ? '' : 'none';
+    });
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.style.display = lang === 'en' ? '' : 'none';
+    });
+  }
+
+  // ─── SCROLL REVEAL ───
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
