@@ -152,18 +152,17 @@
     background: var(--navy); padding: 7rem 8vw;
     position: relative; overflow: hidden;
   }
-  
-.problem-image img {
-  display: flex;
-  justify-content: center;
-}
-
-.problem-image img {
-  width: 100%;
-  max-width: 300px;
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
- } 
+  .problem-product-img {
+    position: absolute;
+    right: 6vw;
+    top: 50%;
+    transform: translateY(-50%);
+    width: clamp(200px, 22vw, 320px);
+    opacity: 0.92;
+    z-index: 2;
+    pointer-events: none;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
+  }
   .problem-section::before {
     content: 'PROBLEMA'; position: absolute; right: 2vw; top: 50%;
     transform: translateY(-50%); font-family: 'Cormorant Garamond', serif;
@@ -171,8 +170,8 @@
     color: rgba(255,255,255,0.03); letter-spacing: -0.05em; pointer-events: none; line-height: 1;
   }
   .problem-inner {
-    max-width: 1200px; position: relative; z-index: 1;
-    display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 4rem; align-items: center;
+    max-width: 960px; position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: center;
   }
   .problem-heading {
     font-family: 'Cormorant Garamond', serif;
@@ -186,7 +185,6 @@
     border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0;
     padding: 1.2rem 1.5rem; transition: background 0.3s ease;
   }
-}
   .pain-item:hover { background: rgba(26,111,173,0.12); }
   .pain-item strong {
     display: block; color: var(--teal-light); font-size: 0.78rem; font-weight: 600;
@@ -527,6 +525,7 @@
 
 <!-- ═══ PROBLEM ═══ -->
 <section class="problem-section">
+  <img src="../freestyle-libre.png" alt="FreeStyle Libre" class="problem-product-img" />
   <div class="problem-inner reveal">
     <div>
       <div class="section-label" style="color: var(--teal-light);">
@@ -567,12 +566,8 @@
           <span data-en style="display:none">These barriers directly limited product adoption. Without education first, conversion was not possible.</span>
         </p>
       </div>
-</div>
     </div>
   </div>
-      <img src="../libre-sensor.png" alt="libre Sensor" />
-        <div class="problem-image">
-        </div>  
 </section>
 
 <!-- ═══ INSIGHT ═══ -->
