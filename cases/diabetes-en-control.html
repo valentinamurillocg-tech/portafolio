@@ -152,6 +152,18 @@
     background: var(--navy); padding: 7rem 8vw;
     position: relative; overflow: hidden;
   }
+  
+.problem-image img {
+  display: flex;
+  justify-content: center;
+}
+
+.problem-image img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+ } 
   .problem-section::before {
     content: 'PROBLEMA'; position: absolute; right: 2vw; top: 50%;
     transform: translateY(-50%); font-family: 'Cormorant Garamond', serif;
@@ -174,16 +186,6 @@
     border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0;
     padding: 1.2rem 1.5rem; transition: background 0.3s ease;
   }
-.problem-image img {
-  display: flex;
-  justify-content: center;
-}
-
-.problem-image img {
-  width: 100%;
-  max-width: 300px;
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
 }
   .pain-item:hover { background: rgba(26,111,173,0.12); }
   .pain-item strong {
