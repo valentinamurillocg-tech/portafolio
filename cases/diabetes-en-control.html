@@ -159,8 +159,8 @@
     color: rgba(255,255,255,0.03); letter-spacing: -0.05em; pointer-events: none; line-height: 1;
   }
   .problem-inner {
-    max-width: 960px; position: relative; z-index: 1;
-    display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 6rem; align-items: center;
+    max-width: 1200px; position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 4rem; align-items: center;
   }
   .problem-heading {
     font-family: 'Cormorant Garamond', serif;
@@ -175,13 +175,15 @@
     padding: 1.2rem 1.5rem; transition: background 0.3s ease;
   }
 .problem-image img {
+  display: flex;
+  justify-content: center;
+}
+
+.problem-image img {
   width: 100%;
   max-width: 300px;
   border-radius: 20px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  display: flex;
-  justify-content: right; 
-  margin: 0 auto;
 }
   .pain-item:hover { background: rgba(26,111,173,0.12); }
   .pain-item strong {
