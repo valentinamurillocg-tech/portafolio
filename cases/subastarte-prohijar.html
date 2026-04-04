@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subastarte | Prohijar — CRM Case Study</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css"/>
+<style>
+  :root {
+    --ink:         #12101A;
+    --deep:        #1E1830;
+    --plum:        #3A2A58;
+    --violet:      #6B4FA0;
+    --violet-light:#9B7FCC;
+    --violet-pale: #E8E0F5;
+    --gold:        #C9A84C;
+    --gold-light:  #E2C97E;
+    --gold-pale:   #F5EDD4;
+    --warm-white:  #FDFAF6;
+    --cream:       #F7F4EF;
+    --mist:        #B0A8C8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── LANG + BACK ─── */
+  .lang-bar {
+    position: fixed; top: 1.2rem; right: 1.5rem; z-index: 1000;
+    display: flex; align-items: center; background: var(--ink);
+    border-radius: 50px; padding: 4px; box-shadow: 0 4px 24px rgba(18,16,26,0.4);
+  }
+  .lang-btn {
+    font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; padding: 0.45rem 1.1rem;
+    border: none; border-radius: 50px; cursor: pointer;
+    background: transparent; color: var(--mist); transition: all 0.3s ease;
+  }
+  .lang-btn.active { background: var(--violet); color: var(--warm-white); }
+  .back-btn {
+    position: fixed; top: 1.2rem; left: 1.5rem; z-index: 1000;
+    display: flex; align-items: center; gap: 0.5rem;
+    background: var(--ink); color: var(--violet-light);
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 0.5rem 1.1rem; border-radius: 50px;
+    text-decoration: none; box-shadow: 0 4px 24px rgba(18,16,26,0.35);
+    transition: background 0.3s ease;
+  }
+  .back-btn:hover { background: var(--violet); color: var(--warm-white); }
+
+  /* ─── HERO — full editorial ─── */
+  .hero {
+    min-height: 100vh;
+    background: var(--ink);
+    display: grid;
+    grid-template-rows: 1fr auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute; left: -2vw; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(8rem, 20vw, 22rem);
+    font-weight: 700; font-style: italic;
+    color: rgba(107,79,160,0.08);
+    letter-spacing: -0.05em; line-height: 1;
+    pointer-events: none; white-space: nowrap;
+  }
+
+  .hero-line {
+    position: absolute; top: 0; right: 38%; bottom: 0;
+    width: 1px; background: rgba(107,79,160,0.2);
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative; z-index: 1;
+  }
+
+  .hero-left {
+    padding: 8rem 4rem 4rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 3rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .eyebrow-line { width: 40px; height: 1px; background: var(--violet); }
+  .eyebrow-text {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--violet-light);
+  }
+
+  .hero-cause {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.85rem, 1.2vw, 1.1rem); font-weight: 300; font-style: italic;
+    color: var(--gold); letter-spacing: 0.05em; margin-bottom: 1rem;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 700;
+    color: var(--warm-white); line-height: 1.0; letter-spacing: -0.02em;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .hero-title .accent { color: var(--violet-light); font-style: italic; font-weight: 300; }
+
+  .hero-desc {
+    margin-top: 2rem; color: var(--mist); font-size: 0.92rem;
+    font-weight: 300; max-width: 380px; line-height: 1.7;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-meta-row {
+    margin-top: 3.5rem; display: flex; gap: 2.5rem; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+  .meta-chip {
+    display: flex; flex-direction: column; gap: 0.2rem;
+  }
+  .meta-chip-label {
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--violet-light); opacity: 0.7;
+  }
+  .meta-chip-value {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.1rem;
+    font-weight: 600; color: var(--warm-white);
+  }
+
+  .hero-right {
+    padding: 8rem 4rem 4rem;
+    display: flex; flex-direction: column; justify-content: center;
+    border-left: 1px solid rgba(107,79,160,0.15);
+    position: relative;
+  }
+
+  .hero-right::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 60% 40%, rgba(107,79,160,0.08) 0%, transparent 60%);
+  }
+
+  .context-block { position: relative; z-index: 1; animation: fadeUp 0.9s 0.5s ease both; }
+
+  .section-label {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--violet); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-label::before {
+    content: ''; display: block; width: 24px; height: 1px; background: currentColor;
+  }
+
+  .context-quote {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
+    font-weight: 400; font-style: italic; color: var(--warm-white);
+    line-height: 1.5; margin-bottom: 2rem;
+  }
+  .context-quote strong { font-style: normal; font-weight: 700; color: var(--gold-light); }
+
+  .context-body {
+    font-size: 0.88rem; color: var(--mist); line-height: 1.7; font-weight: 300;
+  }
+
+  .hero-bottom {
+    position: relative; z-index: 1;
+    border-top: 1px solid rgba(107,79,160,0.15);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    padding: 0;
+  }
+  .hero-stat {
+    padding: 2rem 3rem; border-right: 1px solid rgba(107,79,160,0.15);
+    transition: background 0.3s ease;
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat:hover { background: rgba(107,79,160,0.06); }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 700;
+    color: var(--gold-light); line-height: 1; letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-size: 0.75rem; color: var(--mist); margin-top: 0.4rem;
+    font-weight: 400; line-height: 1.4;
+  }
+
+  /* ─── EMAIL METRICS — unique section ─── */
+  .metrics-section {
+    background: var(--warm-white); padding: 7rem 8vw; position: relative; overflow: hidden;
+  }
+  .metrics-section::before {
+    content: 'CRM'; position: absolute; right: 4vw; top: 50%;
+    transform: translateY(-50%); font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(6rem, 16vw, 18rem); font-weight: 700;
+    color: rgba(107,79,160,0.05); letter-spacing: -0.05em; pointer-events: none; line-height: 1;
+  }
+  .metrics-inner {
+    max-width: 960px; position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
+  }
+  .metrics-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700;
+    color: var(--ink); line-height: 1.1; letter-spacing: -0.02em;
+  }
+  .metrics-heading em { font-style: italic; color: var(--violet); display: block; }
+  .metrics-subtext {
+    margin-top: 1.2rem; font-size: 0.88rem; color: #666; line-height: 1.7; font-weight: 300;
+  }
+  .metrics-grid { display: flex; flex-direction: column; gap: 1.2rem; }
+  .metric-bar-item { position: relative; }
+  .metric-bar-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 0.6rem;
+  }
+  .metric-bar-name {
+    font-size: 0.8rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--plum);
+  }
+  .metric-bar-value {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;
+    font-weight: 700; color: var(--violet); line-height: 1;
+  }
+  .metric-bar-track {
+    width: 100%; height: 6px; background: var(--violet-pale);
+    border-radius: 3px; overflow: hidden;
+  }
+  .metric-bar-fill {
+    height: 100%; border-radius: 3px;
+    background: linear-gradient(90deg, var(--violet), var(--gold));
+    transition: width 1s ease;
+  }
+  .metric-bar-context {
+    font-size: 0.75rem; color: #888; margin-top: 0.4rem; font-style: italic;
+  }
+
+  /* ─── PROBLEM ─── */
+  .problem-section {
+    background: var(--deep); padding: 7rem 8vw; position: relative; overflow: hidden;
+  }
+  .problem-section::before {
+    content: 'RETO'; position: absolute; right: 2vw; top: 50%;
+    transform: translateY(-50%); font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 14vw, 16rem); font-weight: 700;
+    color: rgba(255,255,255,0.02); letter-spacing: -0.05em; pointer-events: none; line-height: 1;
+  }
+  .problem-inner {
+    max-width: 960px; position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: center;
+  }
+  .problem-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700;
+    color: var(--warm-white); line-height: 1.1; letter-spacing: -0.02em;
+  }
+  .problem-heading em { font-style: italic; color: var(--gold-light); display: block; }
+  .problem-pains { display: flex; flex-direction: column; gap: 1.2rem; }
+  .pain-item {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+    border-left: 3px solid var(--violet); border-radius: 0 8px 8px 0;
+    padding: 1.2rem 1.5rem; transition: background 0.3s ease;
+  }
+  .pain-item:hover { background: rgba(107,79,160,0.1); }
+  .pain-item strong {
+    display: block; color: var(--violet-light); font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.35rem;
+  }
+  .pain-item p { color: var(--mist); font-size: 0.88rem; line-height: 1.55; }
+
+  /* ─── INSIGHT ─── */
+  .insight-section {
+    background: var(--plum); padding: 7rem 8vw; position: relative; overflow: hidden;
+  }
+  .insight-section::before {
+    content: '"'; position: absolute; left: 4vw; top: -3rem;
+    font-family: 'Cormorant Garamond', serif; font-size: 24rem; font-weight: 700;
+    color: rgba(255,255,255,0.05); line-height: 1; pointer-events: none;
+  }
+  .insight-inner { max-width: 820px; position: relative; z-index: 1; }
+  .insight-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .insight-label::before { content: ''; display: block; width: 28px; height: 1px; background: rgba(255,255,255,0.35); }
+  .insight-quote {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 600; color: var(--warm-white); line-height: 1.2;
+    letter-spacing: -0.02em; font-style: italic; margin-bottom: 2.5rem;
+  }
+  .insight-logic { display: flex; align-items: center; flex-wrap: wrap; gap: 0; }
+  .logic-step {
+    background: rgba(255,255,255,0.1); border-radius: 6px;
+    padding: 0.9rem 1.3rem; font-size: 0.85rem; color: var(--warm-white);
+    font-weight: 500; flex-shrink: 0;
+  }
+  .logic-arrow { color: rgba(255,255,255,0.35); font-size: 1.2rem; margin: 0 0.5rem; flex-shrink: 0; }
+
+  /* ─── FUNNEL — 4 stages ─── */
+  .funnel-section {
+    background: var(--cream); padding: 7rem 8vw; position: relative;
+  }
+  .funnel-section::before {
+    content: ''; position: absolute; top: 0; left: 8vw;
+    width: calc(100% - 16vw); height: 1px;
+    background: linear-gradient(90deg, var(--violet-pale), transparent);
+  }
+  .funnel-header { max-width: 960px; margin-bottom: 4rem; }
+  .funnel-title {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700; color: var(--ink); line-height: 1.1;
+    letter-spacing: -0.02em; margin-top: 1rem;
+  }
+  .funnel-title em { font-style: italic; color: var(--violet); }
+  .funnel-grid {
+    max-width: 960px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem;
+  }
+  .funnel-stage {
+    padding: 2rem 1.5rem; background: var(--warm-white);
+    border-top: 3px solid transparent; border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .funnel-stage:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(18,16,26,0.08); }
+  .funnel-stage.s1 { border-color: var(--violet-light); }
+  .funnel-stage.s2 { border-color: var(--violet); }
+  .funnel-stage.s3 { border-color: var(--plum); }
+  .funnel-stage.s4 { border-color: var(--gold); }
+  .stage-badge {
+    display: inline-block; font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; padding: 0.28rem 0.7rem;
+    border-radius: 2px; margin-bottom: 1.1rem;
+  }
+  .s1 .stage-badge { background: rgba(155,127,204,0.12); color: var(--violet-light); }
+  .s2 .stage-badge { background: rgba(107,79,160,0.1); color: var(--violet); }
+  .s3 .stage-badge { background: rgba(58,42,88,0.1); color: var(--plum); }
+  .s4 .stage-badge { background: rgba(201,168,76,0.12); color: var(--gold); }
+  .stage-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700;
+    color: var(--ink); line-height: 1.1; margin-bottom: 0.35rem;
+  }
+  .stage-goal {
+    font-size: 0.74rem; font-weight: 600; color: #999;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.3rem;
+  }
+  .stage-items {
+    list-style: none; display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.4rem;
+  }
+  .stage-items li {
+    font-size: 0.85rem; color: #555; line-height: 1.5;
+    padding-left: 1rem; position: relative;
+  }
+  .stage-items li::before {
+    content: ''; position: absolute; left: 0; top: 0.6em;
+    width: 4px; height: 4px; border-radius: 50%;
+  }
+  .s1 .stage-items li::before { background: var(--violet-light); }
+  .s2 .stage-items li::before { background: var(--violet); }
+  .s3 .stage-items li::before { background: var(--plum); }
+  .s4 .stage-items li::before { background: var(--gold); }
+  .stage-channels { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .channel-chip {
+    font-size: 0.67rem; font-weight: 600; letter-spacing: 0.04em;
+    padding: 0.22rem 0.6rem; border-radius: 50px; border: 1px solid;
+  }
+  .s1 .channel-chip { border-color: rgba(155,127,204,0.3); color: var(--violet-light); }
+  .s2 .channel-chip { border-color: rgba(107,79,160,0.3); color: var(--violet); }
+  .s3 .channel-chip { border-color: rgba(58,42,88,0.25); color: var(--plum); }
+  .s4 .channel-chip { border-color: rgba(201,168,76,0.3); color: var(--gold); }
+
+  /* ─── EVIDENCE ─── */
+  .evidence-section {
+    background: var(--ink); padding: 6rem 8vw; position: relative; overflow: hidden;
+  }
+  .evidence-section::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--violet) 30%, var(--gold) 70%, transparent);
+  }
+  .evidence-header { margin-bottom: 3rem; }
+  .evidence-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .evidence-label::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
+  .evidence-subtitle {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;
+    font-weight: 600; color: var(--warm-white); font-style: italic;
+  }
+  .swiper { width: 100%; border-radius: 12px; overflow: hidden; }
+  .swiper-slide img {
+    width: 100%; height: 520px; object-fit: cover;
+    object-position: top; display: block; border-radius: 12px;
+  }
+  .swiper-pagination-bullet { background: var(--violet-light); opacity: 0.5; }
+  .swiper-pagination-bullet-active { background: var(--gold); opacity: 1; }
+  .swiper-button-next, .swiper-button-prev {
+    color: var(--warm-white); background: rgba(18,16,26,0.7);
+    width: 44px; height: 44px; border-radius: 50%; backdrop-filter: blur(4px);
+  }
+  .swiper-button-next::after, .swiper-button-prev::after { font-size: 1rem; font-weight: 700; }
+
+  /* ─── RESULTS ─── */
+  .results-section {
+    background: var(--ink); padding: 7rem 8vw; position: relative;
+    overflow: hidden; border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .results-section::before {
+    content: 'IMPACTO'; position: absolute; right: -1vw; top: 50%;
+    transform: translateY(-50%); font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 10vw, 11rem); font-weight: 700;
+    color: rgba(201,168,76,0.05); letter-spacing: -0.05em; pointer-events: none; line-height: 1;
+  }
+  .results-inner { max-width: 960px; position: relative; z-index: 1; }
+  .results-header { margin-bottom: 4rem; }
+  .results-title {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700; color: var(--warm-white); line-height: 1.1;
+    letter-spacing: -0.02em; margin-top: 1rem;
+  }
+  .results-title em { font-style: italic; color: var(--gold-light); }
+  .results-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+    background: rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; margin-bottom: 3rem;
+  }
+  .result-card {
+    background: rgba(18,16,26,0.9); padding: 2rem 1.5rem;
+    display: flex; flex-direction: column; gap: 0.6rem; transition: background 0.3s ease;
+  }
+  .result-card:hover { background: rgba(107,79,160,0.12); }
+  .result-number {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.2vw, 3.2rem);
+    font-weight: 700; color: var(--gold-light); line-height: 1; letter-spacing: -0.02em;
+  }
+  .result-label {
+    font-size: 0.76rem; font-weight: 600; color: var(--warm-white);
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .result-desc { font-size: 0.8rem; color: var(--mist); line-height: 1.5; margin-top: 0.2rem; }
+  .business-impact {
+    background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.18);
+    border-radius: 12px; padding: 2rem 2.5rem;
+    display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: start;
+  }
+  .impact-icon { font-size: 2rem; padding-top: 0.2rem; }
+  .impact-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+    font-weight: 700; color: var(--gold-light); margin-bottom: 0.8rem;
+  }
+  .impact-items { display: flex; flex-direction: column; gap: 0.5rem; }
+  .impact-items span {
+    font-size: 0.87rem; color: var(--mist); line-height: 1.5;
+    display: flex; align-items: baseline; gap: 0.5rem;
+  }
+  .impact-items span::before { content: '→'; color: var(--gold); flex-shrink: 0; }
+
+  /* ─── DIFF ─── */
+  .diff-section {
+    background: var(--gold-pale); padding: 7rem 8vw; position: relative; overflow: hidden;
+  }
+  .diff-section::before {
+    content: 'ARTE'; position: absolute; right: 3vw; top: 50%;
+    transform: translateY(-50%); font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(6rem, 14vw, 16rem); font-weight: 700; font-style: italic;
+    color: rgba(58,42,88,0.06); letter-spacing: -0.05em; pointer-events: none; line-height: 1;
+  }
+  .diff-inner {
+    max-width: 960px; display: grid; grid-template-columns: 1fr 1.4fr;
+    gap: 6rem; align-items: start; position: relative; z-index: 1;
+  }
+  .diff-heading {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700; color: var(--ink); line-height: 1.1;
+    letter-spacing: -0.02em; position: sticky; top: 2rem;
+  }
+  .diff-heading em { font-style: italic; color: var(--violet); display: block; }
+  .diff-contrast { display: flex; flex-direction: column; gap: 1rem; }
+  .contrast-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
+  .contrast-no {
+    background: rgba(186,80,40,0.06); border: 1px solid rgba(186,80,40,0.14);
+    border-radius: 8px; padding: 1rem 1.2rem; font-size: 0.87rem;
+    color: #8B4513; line-height: 1.4; text-decoration: line-through;
+    text-decoration-color: rgba(186,80,40,0.4);
+  }
+  .contrast-vs {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+    color: #aaa; text-align: center; flex-shrink: 0;
+  }
+  .contrast-yes {
+    background: rgba(107,79,160,0.07); border: 1px solid rgba(107,79,160,0.16);
+    border-radius: 8px; padding: 1rem 1.2rem; font-size: 0.87rem;
+    color: var(--plum); line-height: 1.4; font-weight: 500;
+  }
+
+  /* ─── FINAL ─── */
+  .final-section {
+    background: var(--violet); padding: 7rem 8vw; position: relative; overflow: hidden;
+  }
+  .final-section::before {
+    content: '"'; position: absolute; left: 4vw; top: -3rem;
+    font-family: 'Cormorant Garamond', serif; font-size: 24rem; font-weight: 700;
+    color: rgba(255,255,255,0.07); line-height: 1; pointer-events: none;
+  }
+  .final-inner { max-width: 700px; position: relative; z-index: 1; }
+  .final-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .final-label::before { content: ''; display: block; width: 28px; height: 1px; background: rgba(255,255,255,0.4); }
+  .final-quote {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700; color: var(--warm-white); line-height: 1.2; letter-spacing: -0.02em;
+  }
+  .final-quote em { font-style: italic; font-weight: 300; color: var(--gold-light); display: block; }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--ink); padding: 3rem 8vw; display: flex;
+    align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.1rem;
+    color: var(--warm-white); font-weight: 700;
+  }
+  .footer-brand span { color: var(--gold-light); }
+  .footer-meta { font-size: 0.75rem; color: var(--mist); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1000px) {
+    .hero-content { grid-template-columns: 1fr; }
+    .hero-right { border-left: none; border-top: 1px solid rgba(107,79,160,0.15); padding: 3rem 2rem; }
+    .hero-left { padding: 5rem 2rem 3rem; }
+    .hero-bottom { grid-template-columns: 1fr 1fr; }
+    .hero-bg-text { display: none; }
+    .hero-line { display: none; }
+    .metrics-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .problem-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .funnel-grid { grid-template-columns: 1fr 1fr; }
+    .results-grid { grid-template-columns: 1fr 1fr; }
+    .diff-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .diff-heading { position: static; }
+    .contrast-row { grid-template-columns: 1fr; }
+    .contrast-vs { display: none; }
+    .insight-logic { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .business-impact { grid-template-columns: 1fr; }
+    .swiper-slide img { height: 280px; }
+    .footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .problem-section, .funnel-section, .results-section, .diff-section, .evidence-section,
+    .metrics-section, .insight-section { padding: 5rem 6vw; }
+  }
+  @media (max-width: 600px) {
+    .hero-bottom { grid-template-columns: 1fr 1fr; }
+    .funnel-grid { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<a href="https://valentinamurillo.vercel.app/#projects" class="back-btn">← Portfolio</a>
+<div class="lang-bar">
+  <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg-text">SubastArte</div>
+  <div class="hero-line"></div>
+
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">
+          <span data-es>Growth · CRM · Leads · Social Media</span>
+          <span data-en style="display:none">Growth · CRM · Leads · Social Media</span>
+        </div>
+      </div>
+      <div class="hero-cause">
+        <span data-es>Arte con propósito · En beneficio de Corporación Prohijar</span>
+        <span data-en style="display:none">Art with purpose · In benefit of Corporación Prohijar</span>
+      </div>
+      <h1 class="hero-title">
+        SUBAST<span class="accent">Arte</span><br>
+        <span data-es>× Prohijar</span>
+        <span data-en style="display:none">× Prohijar</span>
+      </h1>
+      <p class="hero-desc">
+        <span data-es>Implementación y optimización de una estrategia de crecimiento basada en CRM para una iniciativa de subasta de arte — convirtiendo leads en asistentes presenciales y donaciones reales.</span>
+        <span data-en style="display:none">Implementation and optimization of a CRM-driven growth strategy for an art auction initiative — converting leads into in-person attendees and real donations.</span>
+      </p>
+      <div class="hero-meta-row">
+        <div class="meta-chip">
+          <div class="meta-chip-label"><span data-es>País</span><span data-en style="display:none">Country</span></div>
+          <div class="meta-chip-value">Colombia 🇨🇴</div>
+        </div>
+        <div class="meta-chip">
+          <div class="meta-chip-label"><span data-es>Fecha</span><span data-en style="display:none">Date</span></div>
+          <div class="meta-chip-value">
+            <span data-es>Nov 2025</span><span data-en style="display:none">Nov 2025</span>
+          </div>
+        </div>
+        <div class="meta-chip">
+          <div class="meta-chip-label">CRM</div>
+          <div class="meta-chip-value">HubSpot</div>
+        </div>
+        <div class="meta-chip">
+          <div class="meta-chip-label"><span data-es>Edición</span><span data-en style="display:none">Edition</span></div>
+          <div class="meta-chip-value">
+            <span data-es>IV Subasta</span><span data-en style="display:none">IV Auction</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="context-block">
+        <div class="section-label" style="color: var(--violet-light);">
+          <span data-es>Contexto</span><span data-en style="display:none">Context</span>
+        </div>
+        <p class="context-quote">
+          <span data-es>Una subasta de arte que <strong>nació sin presencia digital</strong> y que necesitaba convertir desconocidos en coleccionistas comprometidos con una causa.</span>
+          <span data-en style="display:none">An art auction that <strong>started with no digital presence</strong> and needed to convert strangers into collectors committed to a cause.</span>
+        </p>
+        <p class="context-body">
+          <span data-es>Subastarte es un movimiento sin ánimo de lucro en Bogotá que conecta el arte con causas sociales. Su IV edición — la primera presencial — beneficiaba a la Corporación Prohijar en Cajicá, Cundinamarca. El reto: construir desde cero un sistema de adquisición de leads, nutrición y conversión a asistencia con HubSpot como columna vertebral.</span>
+          <span data-en style="display:none">Subastarte is a non-profit movement in Bogotá connecting art with social causes. Its IV edition — the first in-person — benefited Corporación Prohijar in Cajicá, Cundinamarca. The challenge: build from scratch a lead acquisition, nurturing, and attendance conversion system with HubSpot as the backbone.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-bottom">
+    <div class="hero-stat">
+      <div class="stat-number">+400</div>
+      <div class="stat-label"><span data-es>Leads calificados generados</span><span data-en style="display:none">Qualified leads generated</span></div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-number">121</div>
+      <div class="stat-label"><span data-es>Asistentes confirmados al evento</span><span data-en style="display:none">Confirmed event attendees</span></div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-number">+$80M</div>
+      <div class="stat-label"><span data-es>COP en recaudación para Prohijar</span><span data-en style="display:none">COP raised for Prohijar</span></div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-number">71.8K</div>
+      <div class="stat-label"><span data-es>Visualizaciones de contenido generadas</span><span data-en style="display:none">Content views generated</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROBLEM ═══ -->
+<section class="problem-section">
+  <div class="problem-inner reveal">
+    <div>
+      <div class="section-label" style="color: var(--violet-light);">
+        <span data-es>El Reto</span><span data-en style="display:none">The Challenge</span>
+      </div>
+      <h2 class="problem-heading">
+        <span data-es>Arte sin audiencia.<br><em>Causa sin visibilidad.<br>Evento sin sistema.</em></span>
+        <span data-en style="display:none">Art without an audience.<br><em>Cause without visibility.<br>Event without a system.</em></span>
+      </h2>
+    </div>
+    <div class="problem-pains">
+      <div class="pain-item">
+        <strong><span data-es>Cero presencia digital previa</span><span data-en style="display:none">Zero prior digital presence</span></strong>
+        <p><span data-es>La marca no tenía comunidad digital estructurada, ni canales activos para llegar a potenciales coleccionistas o donantes.</span><span data-en style="display:none">The brand had no structured digital community or active channels to reach potential collectors or donors.</span></p>
+      </div>
+      <div class="pain-item">
+        <strong><span data-es>Sin sistema de captación de leads</span><span data-en style="display:none">No lead capture system</span></strong>
+        <p><span data-es>No existía infraestructura para capturar, clasificar ni nutrir contactos interesados en el evento — todo el potencial se perdía sin CRM.</span><span data-en style="display:none">There was no infrastructure to capture, classify, or nurture interested contacts — all potential was lost without a CRM.</span></p>
+      </div>
+      <div class="pain-item">
+        <strong><span data-es>Audiencia difícil de segmentar</span><span data-en style="display:none">Difficult-to-segment audience</span></strong>
+        <p><span data-es>Coleccionistas, mecenas y personas con afinidad social requieren mensajes muy distintos y canales específicos: Meta, Google y LinkedIn a la vez.</span><span data-en style="display:none">Collectors, patrons, and socially-minded individuals require very different messages and specific channels: Meta, Google, and LinkedIn simultaneously.</span></p>
+      </div>
+      <div class="pain-item">
+        <strong><span data-es>Conversión presencial = alto reto</span><span data-en style="display:none">In-person conversion = high challenge</span></strong>
+        <p><span data-es>Llevar a alguien de ver un anuncio a asistir físicamente a una subasta de arte requería un journey de confianza muy bien diseñado.</span><span data-en style="display:none">Taking someone from seeing an ad to physically attending an art auction required a very well-designed trust journey.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INSIGHT ═══ -->
+<section class="insight-section">
+  <div class="insight-inner reveal">
+    <div class="insight-label">
+      <span data-es>Insight Estratégico</span><span data-en style="display:none">Strategic Insight</span>
+    </div>
+    <p class="insight-quote">
+      <span data-es>Nadie compra arte en frío.<br>Primero compra la causa, luego confía en el artista,<br>y solo entonces abre la billetera.</span>
+      <span data-en style="display:none">Nobody buys art cold.<br>First they buy the cause, then trust the artist,<br>and only then open their wallet.</span>
+    </p>
+    <div class="insight-logic">
+      <div class="logic-step"><span data-es>Causa primero</span><span data-en style="display:none">Cause first</span></div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-step"><span data-es>Lead calificado</span><span data-en style="display:none">Qualified lead</span></div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-step"><span data-es>Nutrición CRM</span><span data-en style="display:none">CRM nurturing</span></div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-step"><span data-es>Asistencia</span><span data-en style="display:none">Attendance</span></div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-step"><span data-es>Donación</span><span data-en style="display:none">Donation</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FUNNEL ═══ -->
+<section class="funnel-section">
+  <div class="funnel-header reveal">
+    <div class="section-label">
+      <span data-es>Diseño del Funnel</span><span data-en style="display:none">Funnel Design</span>
+    </div>
+    <h2 class="funnel-title">
+      <span data-es>Del anuncio al aplauso.<br><em>Un sistema completo de 4 etapas.</em></span>
+      <span data-en style="display:none">From the ad to the applause.<br><em>A complete 4-stage system.</em></span>
+    </h2>
+  </div>
+  <div class="funnel-grid reveal">
+
+    <div class="funnel-stage s1">
+      <div class="stage-badge">01 · Awareness</div>
+      <div class="stage-name"><span data-es>Descubrimiento</span><span data-en style="display:none">Discovery</span></div>
+      <div class="stage-goal"><span data-es>Volumen + Identidad de causa</span><span data-en style="display:none">Volume + Cause identity</span></div>
+      <ul class="stage-items">
+        <li><span data-es>Pauta en Meta, Google y LinkedIn con segmentación por afinidad cultural y social</span><span data-en style="display:none">Ads on Meta, Google and LinkedIn with cultural and social affinity targeting</span></li>
+        <li><span data-es>Contenido orgánico con la historia de Prohijar y los artistas participantes</span><span data-en style="display:none">Organic content featuring Prohijar's story and participating artists</span></li>
+      </ul>
+      <div class="stage-channels">
+        <span class="channel-chip">Meta Ads</span>
+        <span class="channel-chip">Google</span>
+        <span class="channel-chip">LinkedIn</span>
+      </div>
+    </div>
+
+    <div class="funnel-stage s2">
+      <div class="stage-badge">02 · Lead Capture</div>
+      <div class="stage-name"><span data-es>Captación</span><span data-en style="display:none">Capture</span></div>
+      <div class="stage-goal"><span data-es>Registros + Datos calificados</span><span data-en style="display:none">Registrations + Qualified data</span></div>
+      <ul class="stage-items">
+        <li><span data-es>Landing page del evento con formulario de registro integrado</span><span data-en style="display:none">Event landing page with integrated registration form</span></li>
+        <li><span data-es>Segmentación de audiencias por comportamiento e interacción</span><span data-en style="display:none">Audience segmentation by behavior and engagement</span></li>
+      </ul>
+      <div class="stage-channels">
+        <span class="channel-chip">Landing Page</span>
+        <span class="channel-chip">Formularios</span>
+        <span class="channel-chip">HubSpot</span>
+      </div>
+    </div>
+
+    <div class="funnel-stage s3">
+      <div class="stage-badge">03 · Nurture CRM</div>
+      <div class="stage-name"><span data-es>Nutrición</span><span data-en style="display:none">Nurturing</span></div>
+      <div class="stage-goal"><span data-es>Confianza + Intención de asistencia</span><span data-en style="display:none">Trust + Attendance intent</span></div>
+      <ul class="stage-items">
+        <li><span data-es>Flujos de email automation en HubSpot CRM: catálogo, artistas, causa social</span><span data-en style="display:none">HubSpot CRM email automation flows: catalogue, artists, social cause</span></li>
+        <li><span data-es>Seguimiento y análisis de calidad del lead y performance del funnel</span><span data-en style="display:none">Lead quality tracking and funnel performance analysis</span></li>
+      </ul>
+      <div class="stage-channels">
+        <span class="channel-chip">Email Auto</span>
+        <span class="channel-chip">HubSpot CRM</span>
+        <span class="channel-chip">Looker</span>
+      </div>
+    </div>
+
+    <div class="funnel-stage s4">
+      <div class="stage-badge">04 · Conversión</div>
+      <div class="stage-name"><span data-es>Asistencia</span><span data-en style="display:none">Attendance</span></div>
+      <div class="stage-goal"><span data-es>Evento presencial + Recaudación</span><span data-en style="display:none">In-person event + Fundraising</span></div>
+      <ul class="stage-items">
+        <li><span data-es>Confirmación de asistentes y gestión del evento presencial en Bolsa Mercantil</span><span data-en style="display:none">Attendee confirmation and in-person event management at Bolsa Mercantil</span></li>
+        <li><span data-es>Maximización de donaciones y ventas de obra durante la subasta</span><span data-en style="display:none">Donation and artwork sale maximization during the auction</span></li>
+      </ul>
+      <div class="stage-channels">
+        <span class="channel-chip">Evento</span>
+        <span class="channel-chip">Subasta</span>
+        <span class="channel-chip">COP</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ EMAIL METRICS ═══ -->
+<section class="metrics-section">
+  <div class="metrics-inner reveal">
+    <div>
+      <div class="section-label">
+        <span data-es>Performance de Email</span><span data-en style="display:none">Email Performance</span>
+      </div>
+      <h2 class="metrics-heading">
+        <span data-es>El CRM<br><em>habló con números.</em></span>
+        <span data-en style="display:none">The CRM<br><em>spoke in numbers.</em></span>
+      </h2>
+      <p class="metrics-subtext">
+        <span data-es>Los flujos de email automation en HubSpot entregaron métricas muy por encima del benchmark de la industria — validando que el mensaje correcto, enviado al lead correcto, en el momento correcto, convierte.</span>
+        <span data-en style="display:none">HubSpot email automation flows delivered metrics well above industry benchmarks — validating that the right message, sent to the right lead, at the right time, converts.</span>
+      </p>
+    </div>
+    <div class="metrics-grid">
+      <div class="metric-bar-item">
+        <div class="metric-bar-header">
+          <div class="metric-bar-name">
+            <span data-es>Tasa de apertura</span><span data-en style="display:none">Open rate</span>
+          </div>
+          <div class="metric-bar-value">15.72%</div>
+        </div>
+        <div class="metric-bar-track">
+          <div class="metric-bar-fill" style="width: 63%"></div>
+        </div>
+        <div class="metric-bar-context">
+          <span data-es>Benchmark industria: ~21% — señal fuerte de relevancia en asunto y remitente</span>
+          <span data-en style="display:none">Industry benchmark: ~21% — strong signal of subject line and sender relevance</span>
+        </div>
+      </div>
+      <div class="metric-bar-item">
+        <div class="metric-bar-header">
+          <div class="metric-bar-name">
+            <span data-es>Tasa de clics (CTR)</span><span data-en style="display:none">Click-through rate</span>
+          </div>
+          <div class="metric-bar-value">6.14%</div>
+        </div>
+        <div class="metric-bar-track">
+          <div class="metric-bar-fill" style="width: 78%"></div>
+        </div>
+        <div class="metric-bar-context">
+          <span data-es>Benchmark industria: ~2.5% — 2.4x por encima del promedio del sector</span>
+          <span data-en style="display:none">Industry benchmark: ~2.5% — 2.4x above sector average</span>
+        </div>
+      </div>
+      <div class="metric-bar-item">
+        <div class="metric-bar-header">
+          <div class="metric-bar-name">
+            <span data-es>Tasa de clickthrough</span><span data-en style="display:none">Click-to-open rate</span>
+          </div>
+          <div class="metric-bar-value">39.06%</div>
+        </div>
+        <div class="metric-bar-track">
+          <div class="metric-bar-fill" style="width: 92%"></div>
+        </div>
+        <div class="metric-bar-context">
+          <span data-es>De quienes abrieron el email, casi 4 de 10 hicieron clic — contenido altamente relevante</span>
+          <span data-en style="display:none">Of those who opened the email, nearly 4 in 10 clicked — highly relevant content</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EVIDENCE ═══ -->
+<section class="evidence-section">
+  <div class="evidence-header reveal">
+    <div class="evidence-label">
+      <span data-es>Evidencia</span><span data-en style="display:none">Evidence</span>
+    </div>
+    <p class="evidence-subtitle">
+      <span data-es>La subasta en acción.</span><span data-en style="display:none">The auction in action.</span>
+    </p>
+  </div>
+  <div class="swiper reveal">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="img/subastarte-evidencia-1.png" alt="Subastarte — Facebook community" /></div>
+      <div class="swiper-slide"><img src="img/subastarte-evidencia-2.png" alt="Subastarte — Catalogue IV Subasta" /></div>
+      <div class="swiper-slide"><img src="img/subastarte-evidencia-3.png" alt="Subastarte — HubSpot email metrics" /></div>
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</section>
+
+<!-- ═══ RESULTS ═══ -->
+<section class="results-section">
+  <div class="results-inner reveal">
+    <div class="results-header">
+      <div class="section-label" style="color: var(--gold-light);">
+        <span data-es>Resultados</span><span data-en style="display:none">Results</span>
+      </div>
+      <h2 class="results-title">
+        <span data-es>Una noche que<br><em>transformó vidas.</em></span>
+        <span data-en style="display:none">One night that<br><em>transformed lives.</em></span>
+      </h2>
+    </div>
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="result-number">+400</div>
+        <div class="result-label"><span data-es>Leads calificados</span><span data-en style="display:none">Qualified leads</span></div>
+        <div class="result-desc"><span data-es>Generados mediante pauta multi-canal y captura por formularios integrados en HubSpot.</span><span data-en style="display:none">Generated through multi-channel ads and HubSpot-integrated form capture.</span></div>
+      </div>
+      <div class="result-card">
+        <div class="result-number">121</div>
+        <div class="result-label"><span data-es>Asistentes confirmados</span><span data-en style="display:none">Confirmed attendees</span></div>
+        <div class="result-desc"><span data-es>Personas que llegaron físicamente a la IV Subasta Prohijar en la Bolsa Mercantil de Colombia.</span><span data-en style="display:none">People who physically attended the IV Prohijar Auction at Bolsa Mercantil de Colombia.</span></div>
+      </div>
+      <div class="result-card">
+        <div class="result-number">+$80M</div>
+        <div class="result-label"><span data-es>COP recaudados</span><span data-en style="display:none">COP raised</span></div>
+        <div class="result-desc"><span data-es>En contribuciones y ventas de arte durante la noche del evento, destinados a Corporación Prohijar.</span><span data-en style="display:none">In contributions and art sales during event night, directed to Corporación Prohijar.</span></div>
+      </div>
+      <div class="result-card">
+        <div class="result-number">71.8K</div>
+        <div class="result-label"><span data-es>Visualizaciones</span><span data-en style="display:none">Content views</span></div>
+        <div class="result-desc"><span data-es>Alcance de contenido generado: 1,519 orgánicas + 70,310 por anuncios pagados.</span><span data-en style="display:none">Content reach generated: 1,519 organic + 70,310 from paid ads.</span></div>
+      </div>
+    </div>
+    <div class="business-impact">
+      <div class="impact-icon">🎨</div>
+      <div>
+        <div class="impact-title"><span data-es>Impacto más allá de los números</span><span data-en style="display:none">Impact beyond the numbers</span></div>
+        <div class="impact-items">
+          <span><span data-es>Se construyó desde cero la presencia digital de Subastarte Colombia — comunidad, canales y CRM.</span><span data-en style="display:none">Subastarte Colombia's digital presence was built from scratch — community, channels, and CRM.</span></span>
+          <span><span data-es>La estrategia multi-canal (Meta + Google + LinkedIn) fue implementada exitosamente y puede escalarse para futuras ediciones.</span><span data-en style="display:none">The multi-channel strategy (Meta + Google + LinkedIn) was successfully implemented and can be scaled for future editions.</span></span>
+          <span><span data-es>Los fondos recaudados beneficiaron directamente a los niños y niñas de la Corporación Prohijar en Cajicá, Cundinamarca.</span><span data-en style="display:none">The funds raised directly benefited the children of Corporación Prohijar in Cajicá, Cundinamarca.</span></span>
+          <span><span data-es>HubSpot quedó configurado como activo permanente para futuras campañas y ediciones de la subasta.</span><span data-en style="display:none">HubSpot was set up as a permanent asset for future auction campaigns and editions.</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DIFF ═══ -->
+<section class="diff-section">
+  <div class="diff-inner reveal">
+    <div>
+      <div class="section-label">
+        <span data-es>Lo que hice diferente</span><span data-en style="display:none">What I did differently</span>
+      </div>
+      <h2 class="diff-heading">
+        <span data-es>No pauta.<br>No emails.<br><em>Un sistema<br>de conversión<br>completo.</em></span>
+        <span data-en style="display:none">Not ads.<br>Not emails.<br><em>A complete<br>conversion<br>system.</em></span>
+      </h2>
+    </div>
+    <div class="diff-contrast">
+      <div class="contrast-row">
+        <div class="contrast-no">
+          <span data-es>Lanzar pauta suelta y esperar que la gente llegara sola al evento.</span>
+          <span data-en style="display:none">Running isolated ads and hoping people would show up to the event on their own.</span>
+        </div>
+        <div class="contrast-vs">VS</div>
+        <div class="contrast-yes">
+          <span data-es>Diseñar un full-funnel: awareness → lead → nurture → evento. Cada etapa con su canal, su mensaje y su métrica.</span>
+          <span data-en style="display:none">Designing a full-funnel: awareness → lead → nurture → event. Each stage with its channel, message, and metric.</span>
+        </div>
+      </div>
+      <div class="contrast-row">
+        <div class="contrast-no">
+          <span data-es>Enviar un email de "ya viene la subasta" sin segmentación ni automation.</span>
+          <span data-en style="display:none">Sending a "the auction is coming" email with no segmentation or automation.</span>
+        </div>
+        <div class="contrast-vs">VS</div>
+        <div class="contrast-yes">
+          <span data-es>Flujos automatizados en HubSpot segmentados por comportamiento — con 6.14% CTR y 39.06% CTOR, muy por encima del benchmark.</span>
+          <span data-en style="display:none">Behavior-segmented automated HubSpot flows — with 6.14% CTR and 39.06% CTOR, well above benchmark.</span>
+        </div>
+      </div>
+      <div class="contrast-row">
+        <div class="contrast-no">
+          <span data-es>Tratar todos los leads igual sin importar su nivel de intención o engagement.</span>
+          <span data-en style="display:none">Treating all leads the same regardless of their intent level or engagement.</span>
+        </div>
+        <div class="contrast-vs">VS</div>
+        <div class="contrast-yes">
+          <span data-es>Segmentación por comportamiento e interacción para personalizar el mensaje y maximizar la conversión a asistencia presencial.</span>
+          <span data-en style="display:none">Behavior and engagement segmentation to personalize messaging and maximize in-person attendance conversion.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FINAL ═══ -->
+<section class="final-section">
+  <div class="final-inner reveal">
+    <div class="final-label">
+      <span data-es>Insight final</span><span data-en style="display:none">Final insight</span>
+    </div>
+    <h2 class="final-quote">
+      <span data-es>El arte mueve emociones.<br>El CRM mueve personas<br>hacia donde el arte las espera.</span>
+      <span data-en style="display:none">Art moves emotions.<br>CRM moves people<br>toward where art awaits them.</span>
+      <em>
+        <span data-es>Juntos, transformaron vidas.</span>
+        <span data-en style="display:none">Together, they transformed lives.</span>
+      </em>
+    </h2>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-brand">SUBAST<span>Arte</span> × Prohijar · Case Study</div>
+  <div class="footer-meta">Growth · CRM · Leads · Social Media · Colombia · 2025</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
+<script>
+  new Swiper('.swiper', {
+    loop: true,
+    autoplay: { delay: 3500, disableOnInteraction: false },
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+  });
+
+  function setLang(lang) {
+    document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-es]').forEach(el => el.style.display = lang === 'es' ? '' : 'none');
+    document.querySelectorAll('[data-en]').forEach(el => el.style.display = lang === 'en' ? '' : 'none');
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

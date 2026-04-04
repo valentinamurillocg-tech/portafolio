@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raíces del Alma — Growth Case Study</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css"/>
+<style>
+  :root {
+    --forest:       #1E3A2F;
+    --mid-forest:   #2D5A42;
+    --green:        #3D7A58;
+    --green-light:  #6BAA85;
+    --green-pale:   #D4E9DC;
+    --terra:        #C4693A;
+    --terra-light:  #D98B65;
+    --terra-pale:   #F5E6DC;
+    --gold:         #C9A84C;
+    --gold-light:   #E2C97E;
+    --cream:        #FAF6F0;
+    --warm-white:   #FDFAF6;
+    --light-forest: #7AAA90;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--forest);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── LANG TOGGLE ─── */
+  .lang-bar {
+    position: fixed; top: 1.2rem; right: 1.5rem;
+    z-index: 1000; display: flex; align-items: center;
+    background: var(--forest); border-radius: 50px; padding: 4px;
+    box-shadow: 0 4px 24px rgba(30,58,47,0.3);
+  }
+  .lang-btn {
+    font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; padding: 0.45rem 1.1rem;
+    border: none; border-radius: 50px; cursor: pointer;
+    background: transparent; color: var(--light-forest); transition: all 0.3s ease;
+  }
+  .lang-btn.active { background: var(--terra); color: var(--warm-white); }
+
+  /* ─── BACK ─── */
+  .back-btn {
+    position: fixed; top: 1.2rem; left: 1.5rem; z-index: 1000;
+    display: flex; align-items: center; gap: 0.5rem;
+    background: var(--forest); color: var(--green-light);
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 0.5rem 1.1rem; border-radius: 50px;
+    text-decoration: none; box-shadow: 0 4px 24px rgba(30,58,47,0.3);
+    transition: background 0.3s ease;
+  }
+  .back-btn:hover { background: var(--terra); color: var(--warm-white); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero-left {
+    background: var(--forest); display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 5rem 4rem; position: relative; overflow: hidden;
+  }
+  .hero-left::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(61,122,88,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-left::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--terra), var(--gold), transparent);
+  }
+  .tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(196,105,58,0.15); border: 1px solid rgba(196,105,58,0.3);
+    color: var(--terra-light); font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase; padding: 0.4rem 0.9rem;
+    border-radius: 2px; width: fit-content; margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 4.8rem); font-weight: 700;
+    color: var(--warm-white); line-height: 1.05; letter-spacing: -0.01em;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  .hero-title span {
+    color: var(--gold-light); display: block; font-style: italic;
+    font-weight: 400; font-size: 0.65em; margin-bottom: 0.3rem;
+  }
+  .hero-subtitle {
+    margin-top: 1.5rem; color: var(--light-forest); font-size: 0.95rem;
+    font-weight: 300; max-width: 360px; animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-meta {
+    margin-top: 3rem; display: flex; align-items: center; gap: 2rem;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+  .meta-date {
+    font-family: 'Cormorant Garamond', serif; font-size: 0.9rem;
+    color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .meta-divider { width: 40px; height: 1px; background: rgba(201,168,76,0.4); }
+  .flags { font-size: 1.4rem; }
+
+  .hero-right {
+    background: var(--warm-white); display: flex; align-items: center;
+    justify-content: center; padding: 5rem 4rem; position: relative;
+  }
+  .hero-right::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(196,105,58,0.07) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(61,122,88,0.06) 0%, transparent 50%);
+  }
+  .context-card {
+    position: relative; z-index: 1; max-width: 440px;
+    animation: fadeUp 0.9s 0.5s ease both;
+  }
+  .section-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--terra); margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-label::before {
+    content: ''; display: block; width: 28px; height: 2px; background: currentColor;
+  }
+  .context-text {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+    font-weight: 400; line-height: 1.55; color: var(--forest); font-style: italic;
+  }
+  .context-text strong { font-style: normal; font-weight: 700; color: var(--mid-forest); }
+
+  /* ─── PROBLEM ─── */
+  .problem-section {
+    background: var(--forest); padding: 7rem 8vw;
+    position: relative; overflow: hidden;
+  }
+  .problem-section::before {
+    content: 'RETO'; position: absolute; right: 2vw; top: 50%;
+    transform: translateY(-50%); font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 14vw, 14rem); font-weight: 700;
+    color: rgba(255,255,255,0.03); letter-spacing: -0.05em; pointer-events: none; line-height: 1;
+  }
+  .problem-inner {
+    max-width: 960px; position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: center;
+  }
+  .problem-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700;
+    color: var(--warm-white); line-height: 1.1; letter-spacing: -0.02em;
+  }
+  .problem-heading em { font-style: italic; color: var(--gold-light); display: block; }
+  .problem-pains { display: flex; flex-direction: column; gap: 1.2rem; }
+  .pain-item {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+    border-left: 3px solid var(--terra); border-radius: 0 8px 8px 0;
+    padding: 1.2rem 1.5rem; transition: background 0.3s ease;
+  }
+  .pain-item:hover { background: rgba(196,105,58,0.1); }
+  .pain-item strong {
+    display: block; color: var(--terra-light); font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.35rem;
+  }
+  .pain-item p { color: var(--light-forest); font-size: 0.88rem; line-height: 1.55; }
+
+  /* ─── INSIGHT ─── */
+  .insight-section {
+    background: var(--terra); padding: 7rem 8vw; position: relative; overflow: hidden;
+  }
+  .insight-section::before {
+    content: '"'; position: absolute; left: 6vw; top: -2rem;
+    font-family: 'Cormorant Garamond', serif; font-size: 22rem; font-weight: 700;
+    color: rgba(255,255,255,0.07); line-height: 1; pointer-events: none;
+  }
+  .insight-inner { max-width: 800px; position: relative; z-index: 1; }
+  .insight-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .insight-label::before { content: ''; display: block; width: 28px; height: 2px; background: rgba(255,255,255,0.4); }
+  .insight-quote {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 600; color: var(--warm-white); line-height: 1.2;
+    letter-spacing: -0.02em; font-style: italic; margin-bottom: 2.5rem;
+  }
+  .insight-logic { display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
+  .logic-step {
+    background: rgba(255,255,255,0.15); border-radius: 8px;
+    padding: 1rem 1.4rem; font-size: 0.88rem; color: var(--warm-white);
+    font-weight: 500; flex-shrink: 0;
+  }
+  .logic-arrow { color: rgba(255,255,255,0.45); font-size: 1.2rem; margin: 0 0.5rem; flex-shrink: 0; }
+
+  /* ─── FUNNEL ─── */
+  .funnel-section {
+    background: var(--warm-white); padding: 7rem 8vw; position: relative;
+  }
+  .funnel-section::before {
+    content: ''; position: absolute; top: 0; left: 8vw;
+    width: calc(100% - 16vw); height: 1px;
+    background: linear-gradient(90deg, var(--terra-pale), transparent);
+  }
+  .funnel-header { max-width: 960px; margin-bottom: 4rem; }
+  .funnel-title {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700; color: var(--forest); line-height: 1.1;
+    letter-spacing: -0.02em; margin-top: 1rem;
+  }
+  .funnel-title em { font-style: italic; color: var(--terra); }
+  .funnel-grid {
+    max-width: 960px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .funnel-stage {
+    padding: 2.5rem 2rem; background: var(--cream);
+    border-top: 4px solid transparent; border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .funnel-stage:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(30,58,47,0.1); }
+  .funnel-stage.tofu { border-color: var(--green-light); }
+  .funnel-stage.mofu { border-color: var(--terra); }
+  .funnel-stage.bofu { border-color: var(--gold); }
+  .stage-badge {
+    display: inline-block; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase; padding: 0.3rem 0.8rem;
+    border-radius: 2px; margin-bottom: 1.2rem;
+  }
+  .tofu .stage-badge { background: rgba(107,170,133,0.12); color: var(--green-light); }
+  .mofu .stage-badge { background: rgba(196,105,58,0.1); color: var(--terra); }
+  .bofu .stage-badge { background: rgba(201,168,76,0.12); color: var(--gold); }
+  .stage-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700;
+    color: var(--forest); line-height: 1.1; margin-bottom: 0.4rem;
+  }
+  .stage-goal {
+    font-size: 0.78rem; font-weight: 600; color: var(--light-forest);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.4rem;
+  }
+  .stage-items {
+    list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 1.5rem;
+  }
+  .stage-items li {
+    font-size: 0.88rem; color: var(--mid-forest); line-height: 1.5;
+    padding-left: 1.1rem; position: relative;
+  }
+  .stage-items li::before {
+    content: ''; position: absolute; left: 0; top: 0.6em;
+    width: 5px; height: 5px; border-radius: 50%;
+  }
+  .tofu .stage-items li::before { background: var(--green-light); }
+  .mofu .stage-items li::before { background: var(--terra); }
+  .bofu .stage-items li::before { background: var(--gold); }
+  .stage-channels { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .channel-chip {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em;
+    padding: 0.25rem 0.7rem; border-radius: 50px; border: 1px solid;
+  }
+  .tofu .channel-chip { border-color: rgba(107,170,133,0.35); color: var(--green-light); }
+  .mofu .channel-chip { border-color: rgba(196,105,58,0.35); color: var(--terra); }
+  .bofu .channel-chip { border-color: rgba(201,168,76,0.35); color: var(--gold); }
+
+  /* ─── EVIDENCE ─── */
+  .evidence-section {
+    background: var(--forest); padding: 6rem 8vw; position: relative; overflow: hidden;
+  }
+  .evidence-section::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--terra) 30%, var(--gold) 70%, transparent);
+  }
+  .evidence-header { margin-bottom: 3rem; }
+  .evidence-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .evidence-label::before { content: ''; display: block; width: 28px; height: 2px; background: var(--gold); }
+  .evidence-subtitle {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;
+    font-weight: 600; color: var(--warm-white); font-style: italic;
+  }
+  .swiper { width: 100%; border-radius: 16px; overflow: hidden; }
+  .swiper-slide img {
+    width: 100%; height: 520px; object-fit: cover;
+    object-position: top; display: block; border-radius: 16px;
+  }
+  .swiper-pagination-bullet { background: var(--terra-light); opacity: 0.5; }
+  .swiper-pagination-bullet-active { background: var(--gold); opacity: 1; }
+  .swiper-button-next, .swiper-button-prev {
+    color: var(--warm-white); background: rgba(30,58,47,0.6);
+    width: 44px; height: 44px; border-radius: 50%; backdrop-filter: blur(4px);
+  }
+  .swiper-button-next::after, .swiper-button-prev::after { font-size: 1rem; font-weight: 700; }
+
+  /* ─── RESULTS ─── */
+  .results-section {
+    background: var(--forest); padding: 7rem 8vw; position: relative;
+    overflow: hidden; border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .results-section::before {
+    content: 'RESULTADOS'; position: absolute; right: -2vw; top: 50%;
+    transform: translateY(-50%); font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 9rem); font-weight: 700;
+    color: rgba(201,168,76,0.06); letter-spacing: -0.05em; pointer-events: none; line-height: 1;
+  }
+  .results-inner { max-width: 960px; position: relative; z-index: 1; }
+  .results-header { margin-bottom: 4rem; }
+  .results-title {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700; color: var(--warm-white); line-height: 1.1;
+    letter-spacing: -0.02em; margin-top: 1rem;
+  }
+  .results-title em { font-style: italic; color: var(--gold-light); }
+  .results-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    background: rgba(255,255,255,0.06); border-radius: 16px; overflow: hidden; margin-bottom: 3rem;
+  }
+  .result-card {
+    background: rgba(30,58,47,0.8); padding: 2rem 1.8rem;
+    display: flex; flex-direction: column; gap: 0.6rem; transition: background 0.3s ease;
+  }
+  .result-card:hover { background: rgba(196,105,58,0.12); }
+  .result-number {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 3.5vw, 3.6rem);
+    font-weight: 700; color: var(--gold-light); line-height: 1; letter-spacing: -0.02em;
+  }
+  .result-label {
+    font-size: 0.78rem; font-weight: 600; color: var(--warm-white);
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .result-desc { font-size: 0.82rem; color: var(--light-forest); line-height: 1.5; margin-top: 0.2rem; }
+  .business-impact {
+    background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px; padding: 2rem 2.5rem;
+    display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: start;
+  }
+  .impact-icon { font-size: 2rem; padding-top: 0.2rem; }
+  .impact-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+    font-weight: 700; color: var(--gold-light); margin-bottom: 0.8rem;
+  }
+  .impact-items { display: flex; flex-direction: column; gap: 0.5rem; }
+  .impact-items span {
+    font-size: 0.88rem; color: var(--light-forest); line-height: 1.5;
+    display: flex; align-items: baseline; gap: 0.5rem;
+  }
+  .impact-items span::before { content: '→'; color: var(--gold); flex-shrink: 0; }
+
+  /* ─── WHAT I DID DIFFERENTLY ─── */
+  .diff-section {
+    background: var(--terra-pale); padding: 7rem 8vw; position: relative; overflow: hidden;
+  }
+  .diff-section::before {
+    content: 'GROWTH'; position: absolute; right: 3vw; top: 50%;
+    transform: translateY(-50%); font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 12vw, 12rem); font-weight: 700;
+    color: rgba(196,105,58,0.08); letter-spacing: -0.05em; pointer-events: none; line-height: 1;
+  }
+  .diff-inner {
+    max-width: 960px; display: grid; grid-template-columns: 1fr 1.4fr;
+    gap: 6rem; align-items: start; position: relative; z-index: 1;
+  }
+  .diff-heading {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700; color: var(--forest); line-height: 1.1;
+    letter-spacing: -0.02em; position: sticky; top: 2rem;
+  }
+  .diff-heading em { font-style: italic; color: var(--terra); display: block; }
+  .diff-contrast { display: flex; flex-direction: column; gap: 1rem; }
+  .contrast-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
+  .contrast-no {
+    background: rgba(186,80,40,0.07); border: 1px solid rgba(186,80,40,0.15);
+    border-radius: 8px; padding: 1rem 1.2rem; font-size: 0.88rem;
+    color: #8B4513; line-height: 1.4; text-decoration: line-through;
+    text-decoration-color: rgba(186,80,40,0.4);
+  }
+  .contrast-vs {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+    color: var(--light-forest); text-align: center; flex-shrink: 0;
+  }
+  .contrast-yes {
+    background: rgba(61,122,88,0.08); border: 1px solid rgba(61,122,88,0.18);
+    border-radius: 8px; padding: 1rem 1.2rem; font-size: 0.88rem;
+    color: var(--mid-forest); line-height: 1.4; font-weight: 500;
+  }
+
+  /* ─── FINAL INSIGHT ─── */
+  .final-section {
+    background: var(--mid-forest); padding: 7rem 8vw; position: relative; overflow: hidden;
+  }
+  .final-section::before {
+    content: '"'; position: absolute; left: 4vw; top: -3rem;
+    font-family: 'Cormorant Garamond', serif; font-size: 24rem; font-weight: 700;
+    color: rgba(255,255,255,0.05); line-height: 1; pointer-events: none;
+  }
+  .final-inner { max-width: 700px; position: relative; z-index: 1; }
+  .final-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .final-label::before { content: ''; display: block; width: 28px; height: 2px; background: rgba(255,255,255,0.4); }
+  .final-quote {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700; color: var(--warm-white); line-height: 1.2; letter-spacing: -0.02em;
+  }
+  .final-quote em { font-style: italic; font-weight: 400; color: var(--gold-light); display: block; }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--forest); padding: 3rem 8vw; display: flex;
+    align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--warm-white); font-weight: 700; }
+  .footer-brand span { color: var(--gold-light); }
+  .footer-meta { font-size: 0.78rem; color: var(--light-forest); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 5rem 2rem 2.5rem; min-height: 55vh; justify-content: flex-end; }
+    .hero-right { padding: 3rem 2rem; }
+    .problem-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .funnel-grid { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+    .diff-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .diff-heading { position: static; }
+    .contrast-row { grid-template-columns: 1fr; }
+    .contrast-vs { display: none; }
+    .insight-logic { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .business-impact { grid-template-columns: 1fr; }
+    .problem-section, .funnel-section, .results-section, .diff-section, .evidence-section { padding: 5rem 6vw; }
+    .swiper-slide img { height: 280px; }
+    .footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<a href="https://valentinamurillo.vercel.app/#projects" class="back-btn">← Portfolio</a>
+
+<div class="lang-bar">
+  <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="tag">
+      <span data-es>Growth · Pauta Paga · Comunidad META &nbsp;·&nbsp; 2025</span>
+      <span data-en style="display:none">Growth · Paid Media · META Community &nbsp;·&nbsp; 2025</span>
+    </div>
+    <h1 class="hero-title">
+      <span>Raíces del Alma</span>
+      Colombia<br>🇨🇴
+    </h1>
+    <p class="hero-subtitle">
+      <span data-es>Cómo convertí un emprendimiento bogotano de velitas artesanales en una máquina de ventas digitales — logrando +6M COP en diciembre de 2025.</span>
+      <span data-en style="display:none">How I turned a Bogotá candle artisan business into a digital sales machine — achieving +6M COP in December 2025.</span>
+    </p>
+    <div class="hero-meta">
+      <div class="meta-date">Bogotá · Colombia · 2025</div>
+      <div class="meta-divider"></div>
+      <div class="flags">🕯️</div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="context-card">
+      <div class="section-label">
+        <span data-es>Contexto</span>
+        <span data-en style="display:none">Context</span>
+      </div>
+      <p class="context-text">
+        <span data-es>Emprendimiento bogotano con tienda activa en <strong>raicesdelalmacolombia.com</strong> — velas, aromaterapia, ropa personalizada y productos espirituales. El objetivo: posicionamiento orgánico y pago en Colombia para la época del <strong>7 de velitas</strong>, con enfoque en mensajes hacia WhatsApp.</span>
+        <span data-en style="display:none">A Bogotá-based brand with an active store at <strong>raicesdelalmacolombia.com</strong> — candles, aromatherapy, personalized clothing, and spiritual products. The goal: organic and paid positioning in Colombia for the <strong>Día de las Velitas</strong> season, focused on driving WhatsApp messages.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROBLEM ═══ -->
+<section class="problem-section">
+  <div class="problem-inner reveal">
+    <div>
+      <div class="section-label" style="color: var(--gold-light);">
+        <span data-es>El Reto</span>
+        <span data-en style="display:none">The Challenge</span>
+      </div>
+      <h2 class="problem-heading">
+        <span data-es>Mucho producto.<br><em>Poca visibilidad<br>en el momento que más importa.</em></span>
+        <span data-en style="display:none">Great product.<br><em>Low visibility<br>when it mattered most.</em></span>
+      </h2>
+    </div>
+    <div class="problem-pains">
+      <div class="pain-item">
+        <strong><span data-es>Alta competencia estacional</span><span data-en style="display:none">High seasonal competition</span></strong>
+        <p>
+          <span data-es>El 7 de velitas es uno de los picos de mayor demanda de velas en Colombia, pero también el momento de máxima saturación publicitaria de la categoría.</span>
+          <span data-en style="display:none">Día de las Velitas is one of Colombia's peak candle demand moments, but also the most saturated advertising period in the category.</span>
+        </p>
+      </div>
+      <div class="pain-item">
+        <strong><span data-es>Presencia digital sin estructura</span><span data-en style="display:none">Unstructured digital presence</span></strong>
+        <p>
+          <span data-es>La marca tenía productos únicos y una identidad poderosa, pero sin una estrategia de contenido ni pauta que la convirtiera en ventas concretas.</span>
+          <span data-en style="display:none">The brand had unique products and a powerful identity, but lacked a content and paid strategy to convert that into actual sales.</span>
+        </p>
+      </div>
+      <div class="pain-item">
+        <strong><span data-es>Comunidad sin activar</span><span data-en style="display:none">Inactive community</span></strong>
+        <p>
+          <span data-es>Existía una audiencia potencial en META, pero sin programación estratégica de contenido ni gestión activa de la comunidad para convertirla en clientes.</span>
+          <span data-en style="display:none">There was a potential audience on META, but without strategic content programming or active community management to convert them into buyers.</span>
+        </p>
+      </div>
+      <div class="pain-item">
+        <strong><span data-es>Conversión dependiente de WhatsApp</span><span data-en style="display:none">WhatsApp-dependent conversion</span></strong>
+        <p>
+          <span data-es>El modelo de venta exigía llevar al usuario a una conversación directa. El reto era diseñar un funnel que hiciera ese puente de manera eficiente.</span>
+          <span data-en style="display:none">The sales model required driving users to a direct conversation. The challenge was designing a funnel that bridged that gap efficiently.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INSIGHT ═══ -->
+<section class="insight-section">
+  <div class="insight-inner reveal">
+    <div class="insight-label">
+      <span data-es>Insight Estratégico</span>
+      <span data-en style="display:none">Strategic Insight</span>
+    </div>
+    <p class="insight-quote">
+      <span data-es>Las personas no buscan una vela.<br>Buscan un significado, un regalo con alma,<br>una conexión que las represente.</span>
+      <span data-en style="display:none">People don't search for a candle.<br>They search for meaning, a gift with soul,<br>a connection that represents them.</span>
+    </p>
+    <div class="insight-logic">
+      <div class="logic-step"><span data-es>Identidad de marca</span><span data-en style="display:none">Brand identity</span></div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-step"><span data-es>Contenido con propósito</span><span data-en style="display:none">Purpose-driven content</span></div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-step"><span data-es>Comunidad que confía</span><span data-en style="display:none">Community that trusts</span></div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-step"><span data-es>Venta por WhatsApp</span><span data-en style="display:none">WhatsApp sale</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FUNNEL ═══ -->
+<section class="funnel-section">
+  <div class="funnel-header reveal">
+    <div class="section-label">
+      <span data-es>Diseño del Funnel</span>
+      <span data-en style="display:none">Funnel Design</span>
+    </div>
+    <h2 class="funnel-title">
+      <span data-es>De la vela a la conversación.<br><em>Un funnel construido para cerrar.</em></span>
+      <span data-en style="display:none">From the candle to the conversation.<br><em>A funnel built to close.</em></span>
+    </h2>
+  </div>
+  <div class="funnel-grid reveal">
+
+    <div class="funnel-stage tofu">
+      <div class="stage-badge">TOFU · Awareness</div>
+      <div class="stage-name"><span data-es>Comunidad & Contenido</span><span data-en style="display:none">Community & Content</span></div>
+      <div class="stage-goal"><span data-es>Objetivo: Volumen + Identidad</span><span data-en style="display:none">Goal: Volume + Identity</span></div>
+      <ul class="stage-items">
+        <li><span data-es>Programación de contenido orgánico en Facebook e Instagram</span><span data-en style="display:none">Organic content programming on Facebook and Instagram</span></li>
+        <li><span data-es>Gestión de comunidad META: respuestas, interacciones y engagement activo</span><span data-en style="display:none">META community management: replies, interactions, active engagement</span></li>
+        <li><span data-es>Contenido estacional para 7 de velitas, Navidad y regalos de diciembre</span><span data-en style="display:none">Seasonal content for Día de las Velitas, Christmas, and December gifting</span></li>
+      </ul>
+      <div class="stage-channels">
+        <span class="channel-chip">Facebook</span>
+        <span class="channel-chip">Instagram</span>
+        <span class="channel-chip">Orgánico</span>
+      </div>
+    </div>
+
+    <div class="funnel-stage mofu">
+      <div class="stage-badge">MOFU · Consideración</div>
+      <div class="stage-name"><span data-es>Pauta & Catálogo</span><span data-en style="display:none">Paid Media & Catalogue</span></div>
+      <div class="stage-goal"><span data-es>Objetivo: Intención de compra</span><span data-en style="display:none">Goal: Purchase intent</span></div>
+      <ul class="stage-items">
+        <li><span data-es>Pauta paga en Meta Ads con segmentación de audiencias de regalo e intención</span><span data-en style="display:none">Meta Ads with gift-seeking and intent-based audience targeting</span></li>
+        <li><span data-es>Creativos con kits, precios claros y producto en contexto de regalo</span><span data-en style="display:none">Creatives featuring kits, clear pricing, and product in gifting context</span></li>
+        <li><span data-es>Planning estratégico de publicaciones alineado al calendario estacional</span><span data-en style="display:none">Strategic content planning aligned with the seasonal calendar</span></li>
+      </ul>
+      <div class="stage-channels">
+        <span class="channel-chip">Meta Ads</span>
+        <span class="channel-chip">Meta Business</span>
+        <span class="channel-chip">Planing</span>
+      </div>
+    </div>
+
+    <div class="funnel-stage bofu">
+      <div class="stage-badge">BOFU · Conversión</div>
+      <div class="stage-name"><span data-es>WhatsApp & Cierre</span><span data-en style="display:none">WhatsApp & Close</span></div>
+      <div class="stage-goal"><span data-es>Objetivo: Mensaje = Venta</span><span data-en style="display:none">Goal: Message = Sale</span></div>
+      <ul class="stage-items">
+        <li><span data-es>CTAs de pauta con objetivo de mensajes directos a WhatsApp</span><span data-en style="display:none">Ad CTAs with direct WhatsApp message objective</span></li>
+        <li><span data-es>Usuarios calificados que llegan con intención clara de compra</span><span data-en style="display:none">Qualified users arriving with clear purchase intent</span></li>
+        <li><span data-es>Gestión de presupuesto con optimización continua por resultados de mensajes</span><span data-en style="display:none">Budget management with continuous optimization by message results</span></li>
+      </ul>
+      <div class="stage-channels">
+        <span class="channel-chip">WhatsApp</span>
+        <span class="channel-chip">Presupuesto</span>
+        <span class="channel-chip">DataStudio</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ EVIDENCE ═══ -->
+<section class="evidence-section">
+  <div class="evidence-header reveal">
+    <div class="evidence-label">
+      <span data-es>Evidencia</span>
+      <span data-en style="display:none">Evidence</span>
+    </div>
+    <p class="evidence-subtitle">
+      <span data-es>La marca en acción.</span>
+      <span data-en style="display:none">The brand in action.</span>
+    </p>
+  </div>
+  <div class="swiper reveal">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="img/raices-evidencia-1.png" alt="Raíces del Alma — Facebook community" /></div>
+      <div class="swiper-slide"><img src="img/raices-evidencia-2.png" alt="Raíces del Alma — Product catalogue" /></div>
+      <div class="swiper-slide"><img src="img/raices-evidencia-3.png" alt="Raíces del Alma — Kits navideños" /></div>
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</section>
+
+<!-- ═══ RESULTS ═══ -->
+<section class="results-section">
+  <div class="results-inner reveal">
+    <div class="results-header">
+      <div class="section-label" style="color: var(--gold-light);">
+        <span data-es>Resultados</span>
+        <span data-en style="display:none">Results</span>
+      </div>
+      <h2 class="results-title">
+        <span data-es>Un diciembre que<br><em>habla por sí solo.</em></span>
+        <span data-en style="display:none">A December that<br><em>speaks for itself.</em></span>
+      </h2>
+    </div>
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="result-number">+6M</div>
+        <div class="result-label"><span data-es>COP en ventas</span><span data-en style="display:none">COP in sales</span></div>
+        <div class="result-desc"><span data-es>Ventas generadas en el mes de diciembre de 2025, pico de la temporada de 7 de velitas y Navidad.</span><span data-en style="display:none">Sales generated in December 2025, peak of the Velitas and Christmas season.</span></div>
+      </div>
+      <div class="result-card">
+        <div class="result-number">↑</div>
+        <div class="result-label"><span data-es>Posicionamiento orgánico</span><span data-en style="display:none">Organic positioning</span></div>
+        <div class="result-desc"><span data-es>Crecimiento sostenido de visibilidad orgánica en META gracias a la programación estratégica de contenido.</span><span data-en style="display:none">Sustained organic visibility growth on META through strategic content programming.</span></div>
+      </div>
+      <div class="result-card">
+        <div class="result-number">WA</div>
+        <div class="result-label"><span data-es>Conversión por mensajes</span><span data-en style="display:none">Message-based conversion</span></div>
+        <div class="result-desc"><span data-es>Usuarios calificados llevados desde la pauta directamente a conversaciones de cierre en WhatsApp.</span><span data-en style="display:none">Qualified users driven from ads directly to closing conversations on WhatsApp.</span></div>
+      </div>
+    </div>
+    <div class="business-impact">
+      <div class="impact-icon">🕯️</div>
+      <div>
+        <div class="impact-title"><span data-es>Impacto en el negocio</span><span data-en style="display:none">Business impact</span></div>
+        <div class="impact-items">
+          <span><span data-es>El negocio logró su mejor mes de ventas históricas en diciembre 2025.</span><span data-en style="display:none">The business achieved its best sales month ever in December 2025.</span></span>
+          <span><span data-es>Se construyó una comunidad activa en META con identidad de marca clara y reconocible.</span><span data-en style="display:none">An active META community was built with a clear, recognizable brand identity.</span></span>
+          <span><span data-es>La estrategia combinada (orgánico + pauta) demostró que la venta por WhatsApp escala con el mensaje correcto.</span><span data-en style="display:none">The combined strategy (organic + paid) proved that WhatsApp sales scale with the right message.</span></span>
+          <span><span data-es>Se sentaron las bases para una estrategia digital sostenible más allá de la temporada.</span><span data-en style="display:none">The foundations were set for a sustainable digital strategy beyond the season.</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHAT I DID DIFFERENTLY ═══ -->
+<section class="diff-section">
+  <div class="diff-inner reveal">
+    <div>
+      <div class="section-label">
+        <span data-es>Lo que hice diferente</span>
+        <span data-en style="display:none">What I did differently</span>
+      </div>
+      <h2 class="diff-heading">
+        <span data-es>No pauta suelta.<br><em>Un ecosistema<br>de conversión.</em></span>
+        <span data-en style="display:none">Not scattered ads.<br><em>A conversion<br>ecosystem.</em></span>
+      </h2>
+    </div>
+    <div class="diff-contrast">
+      <div class="contrast-row">
+        <div class="contrast-no">
+          <span data-es>Publicar contenido sin criterio y pautar sin audiencia definida.</span>
+          <span data-en style="display:none">Posting content without strategy and running ads without a defined audience.</span>
+        </div>
+        <div class="contrast-vs">VS</div>
+        <div class="contrast-yes">
+          <span data-es>Planning estratégico + pauta alineada al calendario estacional con audiencias de alta intención de regalo.</span>
+          <span data-en style="display:none">Strategic planning + ads aligned to the seasonal calendar with high-intent gifting audiences.</span>
+        </div>
+      </div>
+      <div class="contrast-row">
+        <div class="contrast-no">
+          <span data-es>Tratar WhatsApp como destino sin preparar al usuario antes.</span>
+          <span data-en style="display:none">Treating WhatsApp as a destination without warming up the user first.</span>
+        </div>
+        <div class="contrast-vs">VS</div>
+        <div class="contrast-yes">
+          <span data-es>Construir confianza con la comunidad primero — para que cuando lleguen al WhatsApp, ya quieran comprar.</span>
+          <span data-en style="display:none">Build community trust first — so by the time they reach WhatsApp, they already want to buy.</span>
+        </div>
+      </div>
+      <div class="contrast-row">
+        <div class="contrast-no">
+          <span data-es>Gestionar presupuesto sin métricas claras de optimización.</span>
+          <span data-en style="display:none">Managing budget without clear optimization metrics.</span>
+        </div>
+        <div class="contrast-vs">VS</div>
+        <div class="contrast-yes">
+          <span data-es>Optimización continua con DataStudio/Looker — cada peso invertido rastreado contra resultados de mensajes y ventas.</span>
+          <span data-en style="display:none">Continuous optimization with DataStudio/Looker — every peso tracked against message results and sales.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FINAL INSIGHT ═══ -->
+<section class="final-section">
+  <div class="final-inner reveal">
+    <div class="final-label">
+      <span data-es>Insight final</span>
+      <span data-en style="display:none">Final insight</span>
+    </div>
+    <h2 class="final-quote">
+      <span data-es>En los emprendimientos con alma,<br>la estrategia no reemplaza la identidad.</span>
+      <span data-en style="display:none">In soul-driven businesses,<br>strategy doesn't replace identity.</span>
+      <em>
+        <span data-es>La amplifica.</span>
+        <span data-en style="display:none">It amplifies it.</span>
+      </em>
+    </h2>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-brand">Raíces del<span> Alma</span> · Case Study</div>
+  <div class="footer-meta">Growth · Pauta Paga · Comunidad META · Colombia · 2025</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
+<script>
+  new Swiper('.swiper', {
+    loop: true,
+    autoplay: { delay: 3500, disableOnInteraction: false },
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+  });
+
+  function setLang(lang) {
+    document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-es]').forEach(el => el.style.display = lang === 'es' ? '' : 'none');
+    document.querySelectorAll('[data-en]').forEach(el => el.style.display = lang === 'en' ? '' : 'none');
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
