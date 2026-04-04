@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diabetes en Control — Growth Case Study</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css"/>
+<style>
+  :root {
+    --navy:       #0D2B45;
+    --mid-navy:   #1E4F78;
+    --blue:       #1A6FAD;
+    --blue-light: #4A9FD4;
+    --blue-pale:  #D4EAF7;
+    --teal:       #00A89C;
+    --teal-light: #4DC7BF;
+    --teal-pale:  #D0F0EE;
+    --ice:        #EAF4FB;
+    --warm-white: #FDFBF9;
+    --cream:      #F2F7FA;
+    --light-navy: #7EA8C8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── LANG TOGGLE ─── */
+  .lang-bar {
+    position: fixed; top: 1.2rem; right: 1.5rem;
+    z-index: 1000; display: flex; align-items: center;
+    background: var(--navy); border-radius: 50px; padding: 4px;
+    box-shadow: 0 4px 24px rgba(13,43,69,0.3);
+  }
+  .lang-btn {
+    font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; padding: 0.45rem 1.1rem;
+    border: none; border-radius: 50px; cursor: pointer;
+    background: transparent; color: var(--light-navy); transition: all 0.3s ease;
+  }
+  .lang-btn.active { background: var(--blue); color: var(--warm-white); }
+
+  /* ─── BACK ─── */
+  .back-btn {
+    position: fixed; top: 1.2rem; left: 1.5rem; z-index: 1000;
+    display: flex; align-items: center; gap: 0.5rem;
+    background: var(--navy); color: var(--blue-light);
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 0.5rem 1.1rem; border-radius: 50px;
+    text-decoration: none; box-shadow: 0 4px 24px rgba(13,43,69,0.3);
+    transition: background 0.3s ease;
+  }
+  .back-btn:hover { background: var(--blue); color: var(--warm-white); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero-left {
+    background: var(--navy); display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 5rem 4rem; position: relative; overflow: hidden;
+  }
+  .hero-left::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(26,111,173,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-left::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--teal), transparent);
+  }
+  .tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(26,111,173,0.15); border: 1px solid rgba(26,111,173,0.3);
+    color: var(--blue-light); font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase; padding: 0.4rem 0.9rem;
+    border-radius: 2px; width: fit-content; margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 4.8rem); font-weight: 700;
+    color: var(--warm-white); line-height: 1.05; letter-spacing: -0.01em;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  .hero-title span {
+    color: var(--teal-light); display: block; font-style: italic;
+    font-weight: 400; font-size: 0.65em; margin-bottom: 0.3rem;
+  }
+  .hero-subtitle {
+    margin-top: 1.5rem; color: var(--light-navy); font-size: 0.95rem;
+    font-weight: 300; max-width: 360px; animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-meta {
+    margin-top: 3rem; display: flex; align-items: center; gap: 2rem;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+  .meta-date {
+    font-family: 'Cormorant Garamond', serif; font-size: 0.9rem;
+    color: var(--teal); letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .meta-divider { width: 40px; height: 1px; background: rgba(0,168,156,0.4); }
+  .flags { font-size: 1.4rem; }
+
+  .hero-right {
+    background: var(--warm-white); display: flex; align-items: center;
+    justify-content: center; padding: 5rem 4rem; position: relative;
+  }
+  .hero-right::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(26,111,173,0.07) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(0,168,156,0.06) 0%, transparent 50%);
+  }
+  .context-card {
+    position: relative; z-index: 1; max-width: 440px;
+    animation: fadeUp 0.9s 0.5s ease both;
+  }
+  .section-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-label::before {
+    content: ''; display: block; width: 28px; height: 2px; background: currentColor;
+  }
+  .context-text {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+    font-weight: 400; line-height: 1.55; color: var(--navy); font-style: italic;
+  }
+  .context-text strong { font-style: normal; font-weight: 700; color: var(--mid-navy); }
+
+  /* ─── PROBLEM ─── */
+  .problem-section {
+    background: var(--navy); padding: 7rem 8vw;
+    position: relative; overflow: hidden;
+  }
+  .problem-section::before {
+    content: 'PROBLEMA'; position: absolute; right: 2vw; top: 50%;
+    transform: translateY(-50%); font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 10vw, 11rem); font-weight: 700;
+    color: rgba(255,255,255,0.03); letter-spacing: -0.05em; pointer-events: none; line-height: 1;
+  }
+  .problem-inner {
+    max-width: 960px; position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: center;
+  }
+  .problem-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700;
+    color: var(--warm-white); line-height: 1.1; letter-spacing: -0.02em;
+  }
+  .problem-heading em { font-style: italic; color: var(--teal-light); display: block; }
+  .problem-pains { display: flex; flex-direction: column; gap: 1.2rem; }
+  .pain-item {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+    border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0;
+    padding: 1.2rem 1.5rem; transition: background 0.3s ease;
+  }
+  .pain-item:hover { background: rgba(26,111,173,0.12); }
+  .pain-item strong {
+    display: block; color: var(--teal-light); font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.35rem;
+  }
+  .pain-item p { color: var(--light-navy); font-size: 0.88rem; line-height: 1.55; }
+
+  /* ─── INSIGHT ─── */
+  .insight-section {
+    background: var(--blue); padding: 7rem 8vw; position: relative; overflow: hidden;
+  }
+  .insight-section::before {
+    content: '"'; position: absolute; left: 6vw; top: -2rem;
+    font-family: 'Cormorant Garamond', serif; font-size: 22rem; font-weight: 700;
+    color: rgba(255,255,255,0.06); line-height: 1; pointer-events: none;
+  }
+  .insight-inner { max-width: 800px; position: relative; z-index: 1; }
+  .insight-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .insight-label::before { content: ''; display: block; width: 28px; height: 2px; background: rgba(255,255,255,0.4); }
+  .insight-quote {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 600; color: var(--warm-white); line-height: 1.2;
+    letter-spacing: -0.02em; font-style: italic; margin-bottom: 2.5rem;
+  }
+  .insight-logic { display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
+  .logic-step {
+    background: rgba(255,255,255,0.12); border-radius: 8px;
+    padding: 1rem 1.4rem; font-size: 0.88rem; color: var(--warm-white);
+    font-weight: 500; flex-shrink: 0;
+  }
+  .logic-arrow { color: rgba(255,255,255,0.4); font-size: 1.2rem; margin: 0 0.5rem; flex-shrink: 0; }
+
+  /* ─── FUNNEL ─── */
+  .funnel-section {
+    background: var(--warm-white); padding: 7rem 8vw; position: relative;
+  }
+  .funnel-section::before {
+    content: ''; position: absolute; top: 0; left: 8vw;
+    width: calc(100% - 16vw); height: 1px;
+    background: linear-gradient(90deg, var(--blue-pale), transparent);
+  }
+  .funnel-header { max-width: 960px; margin-bottom: 4rem; }
+  .funnel-title {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700; color: var(--navy); line-height: 1.1;
+    letter-spacing: -0.02em; margin-top: 1rem;
+  }
+  .funnel-title em { font-style: italic; color: var(--blue); }
+  .funnel-grid {
+    max-width: 960px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .funnel-stage {
+    padding: 2.5rem 2rem; background: var(--cream);
+    border-top: 4px solid transparent; border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .funnel-stage:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(13,43,69,0.1); }
+  .funnel-stage.tofu { border-color: var(--blue-light); }
+  .funnel-stage.mofu { border-color: var(--blue); }
+  .funnel-stage.bofu { border-color: var(--teal); }
+  .stage-badge {
+    display: inline-block; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase; padding: 0.3rem 0.8rem;
+    border-radius: 2px; margin-bottom: 1.2rem;
+  }
+  .tofu .stage-badge { background: rgba(74,159,212,0.12); color: var(--blue-light); }
+  .mofu .stage-badge { background: rgba(26,111,173,0.1); color: var(--blue); }
+  .bofu .stage-badge { background: rgba(0,168,156,0.1); color: var(--teal); }
+  .stage-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700;
+    color: var(--navy); line-height: 1.1; margin-bottom: 0.4rem;
+  }
+  .stage-goal {
+    font-size: 0.78rem; font-weight: 600; color: var(--light-navy);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.4rem;
+  }
+  .stage-items {
+    list-style: none; display: flex; flex-direction: column;
+    gap: 0.7rem; margin-bottom: 1.5rem;
+  }
+  .stage-items li {
+    font-size: 0.88rem; color: var(--mid-navy); line-height: 1.5;
+    padding-left: 1.1rem; position: relative;
+  }
+  .stage-items li::before {
+    content: ''; position: absolute; left: 0; top: 0.6em;
+    width: 5px; height: 5px; border-radius: 50%;
+  }
+  .tofu .stage-items li::before { background: var(--blue-light); }
+  .mofu .stage-items li::before { background: var(--blue); }
+  .bofu .stage-items li::before { background: var(--teal); }
+  .stage-channels { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .channel-chip {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em;
+    padding: 0.25rem 0.7rem; border-radius: 50px; border: 1px solid;
+  }
+  .tofu .channel-chip { border-color: rgba(74,159,212,0.3); color: var(--blue-light); }
+  .mofu .channel-chip { border-color: rgba(26,111,173,0.3); color: var(--blue); }
+  .bofu .channel-chip { border-color: rgba(0,168,156,0.3); color: var(--teal); }
+
+  /* ─── EVIDENCE ─── */
+  .evidence-section {
+    background: var(--navy); padding: 6rem 8vw; position: relative; overflow: hidden;
+  }
+  .evidence-section::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue) 30%, var(--teal) 70%, transparent);
+  }
+  .evidence-header { margin-bottom: 3rem; }
+  .evidence-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--teal-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .evidence-label::before { content: ''; display: block; width: 28px; height: 2px; background: var(--teal); }
+  .evidence-subtitle {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;
+    font-weight: 600; color: var(--warm-white); font-style: italic;
+  }
+  .swiper { width: 100%; border-radius: 16px; overflow: hidden; }
+  .swiper-slide img {
+    width: 100%; height: 520px; object-fit: cover;
+    object-position: top; display: block; border-radius: 16px;
+  }
+  .swiper-pagination-bullet { background: var(--blue-light); opacity: 0.5; }
+  .swiper-pagination-bullet-active { background: var(--teal); opacity: 1; }
+  .swiper-button-next, .swiper-button-prev {
+    color: var(--warm-white); background: rgba(13,43,69,0.6);
+    width: 44px; height: 44px; border-radius: 50%; backdrop-filter: blur(4px);
+  }
+  .swiper-button-next::after, .swiper-button-prev::after { font-size: 1rem; font-weight: 700; }
+
+  /* ─── RESULTS ─── */
+  .results-section {
+    background: var(--navy); padding: 7rem 8vw; position: relative;
+    overflow: hidden; border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .results-section::before {
+    content: 'RESULTS'; position: absolute; right: 2vw; top: 50%;
+    transform: translateY(-50%); font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 12vw, 12rem); font-weight: 700;
+    color: rgba(26,111,173,0.07); letter-spacing: -0.05em; pointer-events: none; line-height: 1;
+  }
+  .results-inner { max-width: 960px; position: relative; z-index: 1; }
+  .results-header { margin-bottom: 4rem; }
+  .results-title {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700; color: var(--warm-white); line-height: 1.1;
+    letter-spacing: -0.02em; margin-top: 1rem;
+  }
+  .results-title em { font-style: italic; color: var(--teal-light); }
+  .results-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+    background: rgba(255,255,255,0.06); border-radius: 16px; overflow: hidden; margin-bottom: 3rem;
+  }
+  .result-card {
+    background: rgba(13,43,69,0.8); padding: 2rem 1.5rem;
+    display: flex; flex-direction: column; gap: 0.6rem; transition: background 0.3s ease;
+  }
+  .result-card:hover { background: rgba(26,111,173,0.15); }
+  .result-number {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 3.5vw, 3.4rem);
+    font-weight: 700; color: var(--teal-light); line-height: 1; letter-spacing: -0.02em;
+  }
+  .result-label {
+    font-size: 0.78rem; font-weight: 600; color: var(--warm-white);
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .result-desc { font-size: 0.82rem; color: var(--light-navy); line-height: 1.5; margin-top: 0.2rem; }
+  .business-impact {
+    background: rgba(0,168,156,0.08); border: 1px solid rgba(0,168,156,0.2);
+    border-radius: 12px; padding: 2rem 2.5rem;
+    display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: start;
+  }
+  .impact-icon { font-size: 2rem; padding-top: 0.2rem; }
+  .impact-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+    font-weight: 700; color: var(--teal-light); margin-bottom: 0.8rem;
+  }
+  .impact-items { display: flex; flex-direction: column; gap: 0.5rem; }
+  .impact-items span {
+    font-size: 0.88rem; color: var(--light-navy); line-height: 1.5;
+    display: flex; align-items: baseline; gap: 0.5rem;
+  }
+  .impact-items span::before { content: '→'; color: var(--teal); flex-shrink: 0; }
+
+  /* ─── WHAT I DID DIFFERENTLY ─── */
+  .diff-section {
+    background: var(--ice); padding: 7rem 8vw; position: relative; overflow: hidden;
+  }
+  .diff-section::before {
+    content: 'GROWTH'; position: absolute; right: 3vw; top: 50%;
+    transform: translateY(-50%); font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 12vw, 12rem); font-weight: 700;
+    color: rgba(26,111,173,0.07); letter-spacing: -0.05em; pointer-events: none; line-height: 1;
+  }
+  .diff-inner {
+    max-width: 960px; display: grid; grid-template-columns: 1fr 1.4fr;
+    gap: 6rem; align-items: start; position: relative; z-index: 1;
+  }
+  .diff-heading {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700; color: var(--navy); line-height: 1.1;
+    letter-spacing: -0.02em; position: sticky; top: 2rem;
+  }
+  .diff-heading em { font-style: italic; color: var(--blue); display: block; }
+  .diff-contrast { display: flex; flex-direction: column; gap: 1rem; }
+  .contrast-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
+  .contrast-no {
+    background: rgba(186,80,40,0.07); border: 1px solid rgba(186,80,40,0.15);
+    border-radius: 8px; padding: 1rem 1.2rem; font-size: 0.88rem;
+    color: #8B4513; line-height: 1.4; text-decoration: line-through;
+    text-decoration-color: rgba(186,80,40,0.4);
+  }
+  .contrast-vs {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+    color: var(--light-navy); text-align: center; flex-shrink: 0;
+  }
+  .contrast-yes {
+    background: rgba(0,168,156,0.07); border: 1px solid rgba(0,168,156,0.18);
+    border-radius: 8px; padding: 1rem 1.2rem; font-size: 0.88rem;
+    color: var(--mid-navy); line-height: 1.4; font-weight: 500;
+  }
+
+  /* ─── FINAL INSIGHT ─── */
+  .final-section {
+    background: var(--teal); padding: 7rem 8vw; position: relative; overflow: hidden;
+  }
+  .final-section::before {
+    content: '"'; position: absolute; left: 4vw; top: -3rem;
+    font-family: 'Cormorant Garamond', serif; font-size: 24rem; font-weight: 700;
+    color: rgba(255,255,255,0.08); line-height: 1; pointer-events: none;
+  }
+  .final-inner { max-width: 700px; position: relative; z-index: 1; }
+  .final-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .final-label::before { content: ''; display: block; width: 28px; height: 2px; background: rgba(255,255,255,0.5); }
+  .final-quote {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700; color: var(--warm-white); line-height: 1.2; letter-spacing: -0.02em;
+  }
+  .final-quote em { font-style: italic; font-weight: 400; display: block; }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--navy); padding: 3rem 8vw; display: flex;
+    align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--warm-white); font-weight: 700; }
+  .footer-brand span { color: var(--teal-light); }
+  .footer-meta { font-size: 0.78rem; color: var(--light-navy); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 5rem 2rem 2.5rem; min-height: 55vh; justify-content: flex-end; }
+    .hero-right { padding: 3rem 2rem; }
+    .problem-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .funnel-grid { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr 1fr; }
+    .diff-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .diff-heading { position: static; }
+    .contrast-row { grid-template-columns: 1fr; }
+    .contrast-vs { display: none; }
+    .insight-logic { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .business-impact { grid-template-columns: 1fr; }
+    .problem-section, .funnel-section, .results-section, .diff-section, .evidence-section { padding: 5rem 6vw; }
+    .swiper-slide img { height: 280px; }
+    .footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<a href="https://valentinamurillo.vercel.app/#projects" class="back-btn">← Portfolio</a>
+
+<div class="lang-bar">
+  <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="tag">
+      <span data-es>Growth Marketing · Social Media · CRO &nbsp;·&nbsp; 2018</span>
+      <span data-en style="display:none">Growth Marketing · Social Media · CRO &nbsp;·&nbsp; 2018</span>
+    </div>
+    <h1 class="hero-title">
+      <span>Diabetes en Control</span>
+      Abbott<br>FreeStyle Libre
+    </h1>
+    <p class="hero-subtitle">
+      <span data-es>Cómo convertí una comunidad educativa en el motor de lanzamiento de un dispositivo médico innovador en Colombia.</span>
+      <span data-en style="display:none">How I turned an educational community into the launch engine for an innovative medical device in Colombia.</span>
+    </p>
+    <div class="hero-meta">
+      <div class="meta-date">Colombia · LATAM · 2018</div>
+      <div class="meta-divider"></div>
+      <div class="flags">🇨🇴</div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="context-card">
+      <div class="section-label">
+        <span data-es>Contexto</span>
+        <span data-en style="display:none">Context</span>
+      </div>
+      <p class="context-text">
+        <span data-es>Lideré el desarrollo de <strong>«Diabetes en Control»</strong>, una comunidad en redes sociales enfocada en educación, diseñada para construir audiencia calificada — y que se convirtió en el ecosistema principal para el lanzamiento de <strong>FreeStyle Libre de Abbott.</strong></span>
+        <span data-en style="display:none">I led the development of <strong>"Diabetes en Control"</strong>, a social media educational community designed to build a qualified audience — which became the core ecosystem for the launch of <strong>Abbott's FreeStyle Libre.</strong></span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROBLEM ═══ -->
+<section class="problem-section">
+  <div class="problem-inner reveal">
+    <div>
+      <div class="section-label" style="color: var(--teal-light);">
+        <span data-es>El Problema Real</span>
+        <span data-en style="display:none">The Real Problem</span>
+      </div>
+      <h2 class="problem-heading">
+        <span data-es>El problema no era<br><em>solo la diabetes.</em></span>
+        <span data-en style="display:none">The problem wasn't<br><em>just diabetes.</em></span>
+      </h2>
+    </div>
+    <div class="problem-pains">
+      <div class="pain-item">
+        <strong><span data-es>Dolor físico diario</span><span data-en style="display:none">Daily physical pain</span></strong>
+        <p>
+          <span data-es>Pincharse más de 11 veces al día para monitorear glucosa genera incomodidad real y rechazo profundo hacia la enfermedad y sus métodos de control.</span>
+          <span data-en style="display:none">Pricking yourself 11+ times a day to monitor glucose creates real discomfort and deep rejection toward the disease and its management methods.</span>
+        </p>
+      </div>
+      <div class="pain-item">
+        <strong><span data-es>Abandono del monitoreo</span><span data-en style="display:none">Monitoring abandonment</span></strong>
+        <p>
+          <span data-es>El dolor generaba descuido y pérdida de control sobre la enfermedad, agravando las consecuencias de salud a largo plazo.</span>
+          <span data-en style="display:none">The pain led to negligence and loss of disease control, worsening long-term health consequences.</span>
+        </p>
+      </div>
+      <div class="pain-item">
+        <strong><span data-es>Baja adopción tecnológica</span><span data-en style="display:none">Low tech adoption</span></strong>
+        <p>
+          <span data-es>FreeStyle Libre eliminaba el dolor con tecnología NFC, pero era desconocida. Sin educación previa, no existía demanda.</span>
+          <span data-en style="display:none">FreeStyle Libre eliminated pain with NFC technology, but was unknown. Without prior education, there was no demand.</span>
+        </p>
+      </div>
+      <div class="pain-item">
+        <strong><span data-es>Impacto directo en negocio</span><span data-en style="display:none">Direct business impact</span></strong>
+        <p>
+          <span data-es>Estas barreras limitaban directamente la adopción del producto. Sin educación primero, no había conversión posible.</span>
+          <span data-en style="display:none">These barriers directly limited product adoption. Without education first, conversion was not possible.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INSIGHT ═══ -->
+<section class="insight-section">
+  <div class="insight-inner reveal">
+    <div class="insight-label">
+      <span data-es>Insight Estratégico</span>
+      <span data-en style="display:none">Strategic Insight</span>
+    </div>
+    <p class="insight-quote">
+      <span data-es>La gente no necesita el producto primero.<br>Necesita entender su enfermedad y confiar.</span>
+      <span data-en style="display:none">People don't need the product first.<br>They need to understand their disease and trust.</span>
+    </p>
+    <div class="insight-logic">
+      <div class="logic-step"><span data-es>Educar primero</span><span data-en style="display:none">Educate first</span></div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-step"><span data-es>Reducir fricción</span><span data-en style="display:none">Reduce friction</span></div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-step"><span data-es>Generar confianza</span><span data-en style="display:none">Build trust</span></div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-step"><span data-es>Aumentar adopción</span><span data-en style="display:none">Increase adoption</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FUNNEL ═══ -->
+<section class="funnel-section">
+  <div class="funnel-header reveal">
+    <div class="section-label">
+      <span data-es>Diseño del Funnel</span>
+      <span data-en style="display:none">Funnel Design</span>
+    </div>
+    <h2 class="funnel-title">
+      <span data-es>Un ecosistema que<br><em>prepara antes de vender.</em></span>
+      <span data-en style="display:none">An ecosystem that<br><em>prepares before selling.</em></span>
+    </h2>
+  </div>
+  <div class="funnel-grid reveal">
+    <div class="funnel-stage tofu">
+      <div class="stage-badge">TOFU · Awareness</div>
+      <div class="stage-name"><span data-es>Comunidad & Confianza</span><span data-en style="display:none">Community & Trust</span></div>
+      <div class="stage-goal"><span data-es>Objetivo: Volumen + Confianza</span><span data-en style="display:none">Goal: Volume + Trust</span></div>
+      <ul class="stage-items">
+        <li><span data-es>Contenido educativo sobre el manejo de la diabetes</span><span data-en style="display:none">Educational content on diabetes management</span></li>
+        <li><span data-es>Comunidad en Facebook e Instagram como grupo de apoyo real</span><span data-en style="display:none">Facebook & Instagram community as a real support group</span></li>
+        <li><span data-es>Posicionamiento como fuente confiable de salud en LATAM</span><span data-en style="display:none">Positioning as a trusted health source in LATAM</span></li>
+      </ul>
+      <div class="stage-channels">
+        <span class="channel-chip">Meta Ads</span>
+        <span class="channel-chip">Google Ads</span>
+        <span class="channel-chip">SEO</span>
+        <span class="channel-chip">Orgánico</span>
+      </div>
+    </div>
+    <div class="funnel-stage mofu">
+      <div class="stage-badge">MOFU · Consideración</div>
+      <div class="stage-name"><span data-es>Educación & Producto</span><span data-en style="display:none">Education & Product</span></div>
+      <div class="stage-goal"><span data-es>Objetivo: Eliminar barreras y dudas</span><span data-en style="display:none">Goal: Remove barriers and doubts</span></div>
+      <ul class="stage-items">
+        <li><span data-es>Landings informativas con beneficios reales del dispositivo</span><span data-en style="display:none">Informative landings with real device benefits</span></li>
+        <li><span data-es>Explicación de tecnología sin pinchazos y lectura NFC en líquido intersticial</span><span data-en style="display:none">Prick-free technology and NFC reading on interstitial fluid</span></li>
+        <li><span data-es>Costos, disponibilidad y diferenciales vs. método tradicional</span><span data-en style="display:none">Costs, availability, and differentials vs. traditional method</span></li>
+      </ul>
+      <div class="stage-channels">
+        <span class="channel-chip">Landings CRO</span>
+        <span class="channel-chip">Retargeting</span>
+        <span class="channel-chip">SEO</span>
+      </div>
+    </div>
+    <div class="funnel-stage bofu">
+      <div class="stage-badge">BOFU · Intención</div>
+      <div class="stage-name"><span data-es>Conversión & Acción</span><span data-en style="display:none">Conversion & Action</span></div>
+      <div class="stage-goal"><span data-es>Objetivo: Preparar la decisión de compra</span><span data-en style="display:none">Goal: Prepare the purchase decision</span></div>
+      <ul class="stage-items">
+        <li><span data-es>Tráfico calificado hacia páginas del producto en farmacia</span><span data-en style="display:none">Qualified traffic to product pages at pharmacy</span></li>
+        <li><span data-es>CTAs de «conoce más» con links directos de adquisición</span><span data-en style="display:none">"Learn more" CTAs with direct acquisition links</span></li>
+        <li><span data-es>Usuarios educados con alta intención, preparados para comprar</span><span data-en style="display:none">Educated high-intent users ready to buy</span></li>
+      </ul>
+      <div class="stage-channels">
+        <span class="channel-chip">Google Ads</span>
+        <span class="channel-chip">Links directos</span>
+        <span class="channel-chip">Farmacia online</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EVIDENCE ═══ -->
+<section class="evidence-section">
+  <div class="evidence-header reveal">
+    <div class="evidence-label">
+      <span data-es>Evidencia</span>
+      <span data-en style="display:none">Evidence</span>
+    </div>
+    <p class="evidence-subtitle">
+      <span data-es>El ecosistema en acción.</span>
+      <span data-en style="display:none">The ecosystem in action.</span>
+    </p>
+  </div>
+  <div class="swiper reveal">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="img/diabetes-evidencia-1.png" alt="Diabetes en Control — Facebook community" /></div>
+      <div class="swiper-slide"><img src="img/diabetes-evidencia-2.png" alt="Diabetes en Control — Mobile campaign" /></div>
+      <div class="swiper-slide"><img src="img/diabetes-evidencia-3.png" alt="Diabetes en Control — Landing page" /></div>
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</section>
+
+<!-- ═══ RESULTS ═══ -->
+<section class="results-section">
+  <div class="results-inner reveal">
+    <div class="results-header">
+      <div class="section-label" style="color: var(--teal-light);">
+        <span data-es>Resultados</span>
+        <span data-en style="display:none">Results</span>
+      </div>
+      <h2 class="results-title">
+        <span data-es>Números que validan<br><em>la estrategia.</em></span>
+        <span data-en style="display:none">Numbers that validate<br><em>the strategy.</em></span>
+      </h2>
+    </div>
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="result-number">10K+</div>
+        <div class="result-label"><span data-es>Visitas calificadas</span><span data-en style="display:none">Qualified visits</span></div>
+        <div class="result-desc"><span data-es>Usuarios de alta intención hacia landings en los primeros meses de campaña.</span><span data-en style="display:none">High-intent users to landing pages in the first months.</span></div>
+      </div>
+      <div class="result-card">
+        <div class="result-number">100K+</div>
+        <div class="result-label"><span data-es>Comunidad activa</span><span data-en style="display:none">Active community</span></div>
+        <div class="result-desc"><span data-es>Seguidores en la comunidad de diabetes más grande de Latinoamérica.</span><span data-en style="display:none">Followers in the largest diabetes community in Latin America.</span></div>
+      </div>
+      <div class="result-card">
+        <div class="result-number">↑</div>
+        <div class="result-label"><span data-es>Tráfico sostenido</span><span data-en style="display:none">Sustained traffic</span></div>
+        <div class="result-desc"><span data-es>Crecimiento continuo gracias a la combinación de SEO + comunidad orgánica activa.</span><span data-en style="display:none">Continuous growth via SEO + active organic community combination.</span></div>
+      </div>
+      <div class="result-card">
+        <div class="result-number">Alto</div>
+        <div class="result-label"><span data-es>Engagement sostenido</span><span data-en style="display:none">Sustained engagement</span></div>
+        <div class="result-desc"><span data-es>Engagement sostenido convertido en intención real y consideración de compra del producto.</span><span data-en style="display:none">Sustained engagement converted into real purchase intent and product consideration.</span></div>
+      </div>
+    </div>
+    <div class="business-impact">
+      <div class="impact-icon">📈</div>
+      <div>
+        <div class="impact-title"><span data-es>Impacto en negocio</span><span data-en style="display:none">Business impact</span></div>
+        <div class="impact-items">
+          <span><span data-es>Se aceleró la adopción temprana de FreeStyle Libre en Colombia.</span><span data-en style="display:none">Early adoption of FreeStyle Libre in Colombia was accelerated.</span></span>
+          <span><span data-es>Se construyó una base de usuarios educados y listos para la decisión de compra.</span><span data-en style="display:none">A base of educated users ready for the purchase decision was built.</span></span>
+          <span><span data-es>Se redujo la fricción en la decisión de compra gracias al contenido educativo previo.</span><span data-en style="display:none">Purchase decision friction was reduced through prior educational content.</span></span>
+          <span><span data-es>El producto encontró mayor disponibilidad y captabilidad en la comunidad de personas con diabetes en Colombia.</span><span data-en style="display:none">The product found greater availability and receptivity within Colombia's diabetes community.</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHAT I DID DIFFERENTLY ═══ -->
+<section class="diff-section">
+  <div class="diff-inner reveal">
+    <div>
+      <div class="section-label">
+        <span data-es>Lo que hice diferente</span>
+        <span data-en style="display:none">What I did differently</span>
+      </div>
+      <h2 class="diff-heading">
+        <span data-es>No una campaña.<br><em>Un sistema<br>de crecimiento.</em></span>
+        <span data-en style="display:none">Not a campaign.<br><em>A growth<br>system.</em></span>
+      </h2>
+    </div>
+    <div class="diff-contrast">
+      <div class="contrast-row">
+        <div class="contrast-no">
+          <span data-es>Empujar tráfico directo al producto desde el día uno.</span>
+          <span data-en style="display:none">Push traffic directly to the product from day one.</span>
+        </div>
+        <div class="contrast-vs">VS</div>
+        <div class="contrast-yes">
+          <span data-es>Preparar al usuario antes de exponerlo al producto. Educación primero, venta después.</span>
+          <span data-en style="display:none">Prepare the user before exposing them to the product. Education first, sale second.</span>
+        </div>
+      </div>
+      <div class="contrast-row">
+        <div class="contrast-no">
+          <span data-es>Tratar la comunidad como canal de distribución de mensajes de marca.</span>
+          <span data-en style="display:none">Treating the community as a brand message distribution channel.</span>
+        </div>
+        <div class="contrast-vs">VS</div>
+        <div class="contrast-yes">
+          <span data-es>Convertirla en un grupo de apoyo real — el mejor influencer orgánico posible para mover a una comunidad hacia un producto.</span>
+          <span data-en style="display:none">Turn it into a real support group — the best possible organic influencer to move a community toward a product.</span>
+        </div>
+      </div>
+      <div class="contrast-row">
+        <div class="contrast-no">
+          <span data-es>Campañas de performance aisladas sin narrativa educativa detrás.</span>
+          <span data-en style="display:none">Isolated performance campaigns without an educational narrative.</span>
+        </div>
+        <div class="contrast-vs">VS</div>
+        <div class="contrast-yes">
+          <span data-es>Cada canal con un rol específico en el funnel. Meta para descubrimiento, Google para captura de demanda, SEO para tráfico sostenible. Nada fue aleatorio.</span>
+          <span data-en style="display:none">Each channel with a specific funnel role. Meta for discovery, Google for demand capture, SEO for sustainable traffic. Nothing was random.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FINAL INSIGHT ═══ -->
+<section class="final-section">
+  <div class="final-inner reveal">
+    <div class="final-label">
+      <span data-es>Insight final</span>
+      <span data-en style="display:none">Final insight</span>
+    </div>
+    <h2 class="final-quote">
+      <span data-es>En salud, la educación<br>no es awareness.<br><em>Es el motor de conversión.</em></span>
+      <span data-en style="display:none">In healthcare, education<br>isn't awareness.<br><em>It's the conversion engine.</em></span>
+    </h2>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-brand">Diabetes en<span> Control</span> · Case Study</div>
+  <div class="footer-meta">Growth Marketing · Social Media · CRO · Colombia · 2018</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
+<script>
+  new Swiper('.swiper', {
+    loop: true,
+    autoplay: { delay: 3500, disableOnInteraction: false },
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+  });
+
+  function setLang(lang) {
+    document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-es]').forEach(el => el.style.display = lang === 'es' ? '' : 'none');
+    document.querySelectorAll('[data-en]').forEach(el => el.style.display = lang === 'en' ? '' : 'none');
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
